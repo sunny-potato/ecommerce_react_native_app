@@ -1,0 +1,4 @@
+- npm start
+- npm run android
+- npm mockapi
+- npm ngrok -> ngrok http 3000
