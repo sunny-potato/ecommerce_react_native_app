@@ -1,5 +1,5 @@
 {
-  "vegetables": [
+  "items": [
     {
       "id": 1,
       "item": "Corn",
@@ -167,10 +167,7 @@
       "like": false,
       "isnew": false,
       "data": {"period": "......", "discount": 15}
-    }
-  ],
-
-  "fruits": [
+    },
     {
       "id": 13,
       "item": "Apple",
@@ -310,9 +307,7 @@
       "like": false,
       "isnew": true,
       "data": {}
-    }
-  ],
-  "meats": [
+    },
     {
       "id": 23,
       "item": "Pork stake",
@@ -452,9 +447,7 @@
       "like": false,
       "isnew": false,
       "data": {}
-    }
-  ],
-  "fishes": [
+    },
     {
       "id": 33,
       "item": "Salmon sushi",
