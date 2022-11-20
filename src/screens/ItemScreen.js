@@ -13,6 +13,30 @@ const ItemScreen = ({navigation, route}) => {
   const currentItem = itemData[id - 1];
   //   console.log(currentItem);
 
+  const extraInfo = () => {
+    if (currentItem.onsale) {
+      const originalPrice = (
+        currentItem.price /
+        (1 - currentItem.data.discount / 100)
+      ).toFixed(0);
+      // console.log(originalPrice);
+      return (
+        <View>
+          <View style={extraStyles.extraInfoBox}>
+            <Text>Sale period</Text>
+            <Text>{currentItem.data.period}</Text>
+          </View>
+          <View style={extraStyles.extraInfoBox}>
+            <Text style={{textDecorationLine: 'line-through'}}>
+              Original price {originalPrice}kr
+            </Text>
+            <Text>{currentItem.data.discount}% OFF</Text>
+          </View>
+        </View>
+      );
+    }
+  };
+  // I want to add "tag info" ex) new, sale, organic, like
   return (
     <View style={styles.pageContainer}>
       <Image style={styles.itemImage} source={localImages[id - 1]} />
@@ -28,6 +52,7 @@ const ItemScreen = ({navigation, route}) => {
         </View>
         <Text style={styles.descriptionText}>Description </Text>
         <Text style={styles.itemDescription}>{currentItem.description}</Text>
+        {extraInfo()}
         <View style={styles.priceUnit}>
           <Text>Price</Text>
           <Text style={styles.itemPrice}>{currentItem.price}kr</Text>
@@ -40,7 +65,7 @@ const ItemScreen = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   pageContainer: {flex: 1, backgroundColor: 'lightgreen'},
-  itemImage: {height: 350},
+  itemImage: {width: 400, height: 350, resizeMode: 'cover'},
   itemInfo: {padding: 20},
   nameImageBox: {
     flexDirection: 'row',
@@ -53,6 +78,14 @@ const styles = StyleSheet.create({
   priceUnit: {flexDirection: 'row'},
   itemPrice: {marginLeft: 'auto', fontSize: 22, fontWeight: '500'},
   itemUnit: {},
+});
+
+const extraStyles = StyleSheet.create({
+  extraInfoBox: {
+    backgroundColor: 'yellow',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
 
 export default ItemScreen;

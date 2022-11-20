@@ -39,12 +39,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 10,
   },
-  itemImage: {width: 200, height: 200, borderRadius: 10},
-  itemInfo: {},
+  itemImage: {width: 200, height: 200, resizeMode: 'contain', borderRadius: 10},
+  itemInfo: {marginLeft: 10},
   itemName: {fontSize: 22, fontWeight: '600'},
   itemType: {fontSize: 14},
   PriceUnit: {flexDirection: 'row', alignItems: 'center'},
-  itemPrice: {fontSize: 18, fontWeight: '300'},
+  itemPrice: {fontSize: 18, fontWeight: '600'},
   itemUnit: {fontSize: 14},
 });
 export default ItemBox;
