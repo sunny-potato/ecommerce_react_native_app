@@ -19,7 +19,7 @@ import FavoritBox from '../components/FavoritBox';
 import {useApi} from '../data/api';
 
 const HomeScreen = ({navigation}) => {
-  const {data: allItems, setData} = useApi('/items');
+  const {data: allItems} = useApi('/items');
   // console.log('TEST', allItems);
 
   if (allItems === undefined) {
@@ -33,7 +33,7 @@ const HomeScreen = ({navigation}) => {
           navigation={navigation}
           // onPress={() => navigation.navigate('Item', {id: i.id})}
         />
-        <Pressable onPress={() => navigation.navigate('Filters')}>
+        <Pressable onPress={() => navigation.navigate('Filters', {allItems})}>
           <Image
             style={styles.filterIcon}
             source={require('../icons/filter.png')}

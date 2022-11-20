@@ -14,19 +14,25 @@ import Data from '../data/data.json';
 import {localImages} from '../data/localImages';
 import FilterDropdown from '../components/FilterDropdown';
 import FilterButton from '../components/FilterButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const FilterResultsScreen = () => {
-  // const {data: test} = useApi('/items');
-  // console.log('TEST', test);
-
-  // if (test === undefined) {
-  //   return <Text>Loading...</Text>;
-  // }
+const SettingsScreen = () => {
   return (
     <View>
-      <Text>FilterResultsScreen</Text>
+      <View>
+        <Text>Language</Text>
+        <Text>LanguageSelect</Text>
+      </View>
+      <View>
+        <Text>Theme</Text>
+        <Text>ColorPicker</Text>
+      </View>
+      <View>
+        <Text>Language</Text>
+        <Text>LanguageSelect</Text>
+      </View>
     </View>
   );
 };
 
-export default FilterResultsScreen;
+export default SettingsScreen;

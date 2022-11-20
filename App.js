@@ -7,6 +7,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import FilterScreen from './src/screens/FilterScreen';
 import ItemScreen from './src/screens/ItemScreen';
 import FilterResultsScreen from './src/screens/FilterResultsScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,19 @@ const HomeStackScreen = () => {
   );
 };
 
+const SettingsStackScreen = () => {
+  return (
+    <Stack.Navigator initialRouteName="Settings">
+      {/* <Stack.Screen
+        name="HomeStack"
+        component={HomeScreen}
+        options={{title: 'Home'}}
+      /> */}
+      <Stack.Screen name="Settings" component={SettingsScreen} />
+    </Stack.Navigator>
+  );
+};
+
 const LandingNavigation = () => {
   return (
     <NavigationContainer>
@@ -43,6 +57,16 @@ const LandingNavigation = () => {
             tabBarLabelStyle: {fontSize: 16},
             // tabBarItemStyle: {width: 200},
             tabBarStyle: {backgroundColor: 'powderblue'},
+          }}
+        />
+        <Tab.Screen
+          name="SettingsTab"
+          component={SettingsStackScreen}
+          options={{
+            tabBarLabel: 'Settings',
+            tabBarLabelStyle: {fontSize: 16},
+            // tabBarItemStyle: {width: 200},
+            // tabBarStyle: {backgroundColor: 'powderblue'},
           }}
         />
       </Tab.Navigator>
