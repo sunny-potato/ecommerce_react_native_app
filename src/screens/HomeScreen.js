@@ -28,8 +28,12 @@ const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.pageContainer}>
       <View style={styles.searchFilter}>
-        <SearchBar data={allItems} />
-        <Pressable onPress={() => navigation.navigate('Filter')}>
+        <SearchBar
+          data={allItems}
+          navigation={navigation}
+          // onPress={() => navigation.navigate('Item', {id: i.id})}
+        />
+        <Pressable onPress={() => navigation.navigate('Filters')}>
           <Image
             style={styles.filterIcon}
             source={require('../icons/filter.png')}

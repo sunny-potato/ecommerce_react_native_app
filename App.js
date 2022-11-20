@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import HomeScreen from './src/screens/HomeScreen';
 import FilterScreen from './src/screens/FilterScreen';
 import ItemScreen from './src/screens/ItemScreen';
+import FilterResultsScreen from './src/screens/FilterResultsScreen';
 // import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createNativeStackNavigator();
@@ -19,7 +20,8 @@ const HomeStackScreen = () => {
         component={HomeScreen}
         options={{title: 'Home'}}
       />
-      <Stack.Screen name="Filter" component={FilterScreen} />
+      <Stack.Screen name="Filters" component={FilterScreen} />
+      <Stack.Screen name="FilterResults" component={FilterResultsScreen} />
       <Stack.Screen name="Item" component={ItemScreen} />
     </Stack.Navigator>
   );

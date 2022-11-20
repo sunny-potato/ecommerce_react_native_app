@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 
-const baseURL = 'https://d176-84-209-59-19.eu.ngrok.io';
+const baseURL = 'https://f478-84-209-59-19.eu.ngrok.io';
 
 export const useApi = path => {
   const [data, setData] = useState();
@@ -12,7 +12,7 @@ export const useApi = path => {
       //   console.log('responseDATA', responseData);
       setData(responseData);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

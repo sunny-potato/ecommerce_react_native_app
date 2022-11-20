@@ -3,7 +3,7 @@
     {
       "id": 1,
       "item": "Corn",
-      "description": "....",
+      "description": "this is test",
       "type": "Vegetable",
       "origin": "Mexico",
       "price": 40,
@@ -17,7 +17,7 @@
     {
       "id": 2,
       "item": "Avocado",
-      "description": "....",
+      "description": "this is test",
       "type": "Vegetable",
       "origin": "Chile",
       "price": 25,
@@ -73,7 +73,7 @@
     {
       "id": 6,
       "item": "Potato",
-      "description": "....",
+      "description": "this is test",
       "type": "Vegetable",
       "origin": "Mexico",
       "price": 80,
@@ -157,7 +157,7 @@
     {
       "id": 12,
       "item": "Onion",
-      "description": "....",
+      "description": "this is test",
       "type": "Vegetable",
       "origin": "Spain",
       "price": 11,

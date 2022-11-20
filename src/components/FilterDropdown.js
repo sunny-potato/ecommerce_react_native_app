@@ -8,17 +8,20 @@ import {localImages} from '../data/localImages';
 
 const FilterDropdown = ({list, categoryTitle, checkedList, setCheckedList}) => {
   const [isChecked, setIsChecked] = useState(false);
-  console.log(checkedList);
 
   return (
-    <View>
+    <View style={styles.filterBox}>
       <Pressable
         onPress={() => {
           isChecked ? setIsChecked(false) : setIsChecked(true);
         }}>
         <View style={styles.category}>
           <Text style={styles.categoryTitle}>{categoryTitle}</Text>
-          {isChecked ? <Text>-</Text> : <Text>+</Text>}
+          {isChecked ? (
+            <Text style={styles.minusIcon}>-</Text>
+          ) : (
+            <Text style={styles.plusIcon}>+</Text>
+          )}
         </View>
       </Pressable>
       <View>
@@ -42,9 +45,12 @@ const FilterDropdown = ({list, categoryTitle, checkedList, setCheckedList}) => {
                   {checkedList.find(checkedName =>
                     checkedName === i ? true : false,
                   ) ? (
-                    <Text>-</Text>
+                    <Image
+                      style={styles.checkIcon}
+                      source={require('../icons/check.png')}
+                    />
                   ) : (
-                    <Text>+</Text>
+                    <Text />
                   )}
                 </View>
               </Pressable>
@@ -56,16 +62,29 @@ const FilterDropdown = ({list, categoryTitle, checkedList, setCheckedList}) => {
 };
 
 const styles = StyleSheet.create({
+  filterBox: {width: 250},
   category: {
     backgroundColor: 'lightblue',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 40,
+    paddingHorizontal: 10,
+    borderRadius: 10,
   },
+  categoryTitle: {fontSize: 18, fontWeight: '600'},
+  minusIcon: {fontSize: 22, fontWeight: '900'},
+  plusIcon: {fontSize: 20, fontWeight: '900'},
   subCategory: {
     backgroundColor: 'lightgreen',
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    height: 40,
+    paddingHorizontal: 20,
+    borderRadius: 10,
   },
+  checkIcon: {width: 10, height: 10},
 });
 
 export default FilterDropdown;
