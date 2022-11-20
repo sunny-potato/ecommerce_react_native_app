@@ -5,4 +5,9 @@
 - npm start
 - npm run android
 - npm mockapi
-- npm ngrok -> ngrok http 3000
+- npm ngrok -> put address of url from ngrok in api.js & ngrok http 3000
+
+spørsmål
+
+1. websocket
+2. filter function

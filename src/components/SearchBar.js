@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   View,
@@ -9,16 +9,55 @@ import {
   Pressable,
 } from 'react-native';
 
-const SearchBar = () => {
+const SearchBar = ({data, navigation}) => {
+  const [query, setQuery] = useState('');
+  const [originalData, setOriginalData] = useState(data);
+
+  const lowerCaseWord = query.toLowerCase();
+  const filteredData = originalData.filter(each => {
+    return (
+      each.item.toLowerCase().includes(lowerCaseWord) ||
+      each.type.toLowerCase().includes(lowerCaseWord) ||
+      each.origin.toLowerCase().includes(lowerCaseWord) ||
+      each.description.toLowerCase().includes(lowerCaseWord)
+    );
+  });
+
   return (
     <View style={styles.pageContainer}>
       <View style={styles.inputBox}>
-        <TextInput style={styles.textInput} placeholder="Enter keyword" />
+        <TextInput
+          style={styles.textInput}
+          placeholder="Enter keyword"
+          value={query}
+          onChangeText={setQuery}
+        />
         <Image
           style={styles.searchIcon}
           source={require('../icons/search.png')}
         />
       </View>
+      {query.length > 0 && filteredData.length > 0 && (
+        <View style={styles.searchResultsBox}>
+          {filteredData.map(i => {
+            return (
+              <Pressable
+                key={i.id}
+                onPress={() => navigation.navigate('Item', {id: i.id})}>
+                <View style={styles.searchResults}>
+                  <Text>{i.item}</Text>
+                  <Text>{i.type}</Text>
+                </View>
+              </Pressable>
+            );
+          })}
+        </View>
+      )}
+      {query.length > 0 && filteredData.length === 0 && (
+        <View style={styles.searchResultsBox}>
+          <Text>No result found</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -34,8 +73,19 @@ const styles = StyleSheet.create({
     height: 40,
     paddingRight: 10,
     margin: 15,
+    // position: 'relative',
   },
   searchIcon: {width: 20, height: 20},
   textInput: {flex: 1},
+  searchResultsBox: {
+    position: 'absolute',
+    zIndex: 10,
+    top: 50,
+    marginLeft: 15,
+    padding: 10,
+    width: 315,
+    backgroundColor: 'white',
+  },
+  searchResults: {flexDirection: 'row', justifyContent: 'space-between'},
 });
 export default SearchBar;
