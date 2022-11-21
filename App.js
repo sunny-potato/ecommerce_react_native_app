@@ -30,7 +30,7 @@ const HomeStackScreen = () => {
 
 const SettingsStackScreen = () => {
   return (
-    <Stack.Navigator initialRouteName="Settings">
+    <Stack.Navigator>
       {/* <Stack.Screen
         name="HomeStack"
         component={HomeScreen}

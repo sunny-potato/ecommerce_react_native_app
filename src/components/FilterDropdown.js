@@ -5,6 +5,7 @@ import DisplayItems from './DisplayItems';
 import useApi from '../data/api';
 import Data from '../data/data.json';
 import {localImages} from '../data/localImages';
+import {text} from '../style/Style';
 
 const FilterDropdown = ({list, categoryTitle, checkedList, setCheckedList}) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -16,7 +17,7 @@ const FilterDropdown = ({list, categoryTitle, checkedList, setCheckedList}) => {
           isChecked ? setIsChecked(false) : setIsChecked(true);
         }}>
         <View style={styles.category}>
-          <Text style={styles.categoryTitle}>{categoryTitle}</Text>
+          <Text style={text.medium}>{categoryTitle}</Text>
           {isChecked ? (
             <Text style={styles.minusIcon}>-</Text>
           ) : (
@@ -41,7 +42,7 @@ const FilterDropdown = ({list, categoryTitle, checkedList, setCheckedList}) => {
                   }
                 }}>
                 <View style={styles.subCategory}>
-                  <Text>{i}</Text>
+                  <Text style={text.small}>{i}</Text>
                   {checkedList.find(checkedName =>
                     checkedName === i ? true : false,
                   ) ? (
@@ -73,8 +74,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   categoryTitle: {fontSize: 18, fontWeight: '600'},
-  minusIcon: {fontSize: 22, fontWeight: '900'},
-  plusIcon: {fontSize: 20, fontWeight: '900'},
+  minusIcon: {fontSize: 22, fontWeight: '900', color: 'black'},
+  plusIcon: {fontSize: 20, fontWeight: '900', color: 'black'},
   subCategory: {
     backgroundColor: 'lightgreen',
     flexDirection: 'row-reverse',

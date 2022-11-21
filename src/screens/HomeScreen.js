@@ -13,6 +13,7 @@ import ItemBox from '../components/ItemBox';
 import OfferBox from '../components/OfferBox';
 import FavoritBox from '../components/FavoritBox';
 import {useApi} from '../data/api';
+import {backgroundColor, text} from '../style/Style';
 
 const HomeScreen = ({navigation}) => {
   const {data: allItems} = useApi('/items');
@@ -21,7 +22,7 @@ const HomeScreen = ({navigation}) => {
     return <Text>Loading...</Text>;
   }
   return (
-    <View style={styles.pageContainer}>
+    <View style={[styles.pageContainer, backgroundColor.pageContainer]}>
       <View style={styles.searchFilter}>
         <SearchBar data={allItems} navigation={navigation} />
         <Pressable onPress={() => navigation.navigate('Filters', {allItems})}>
@@ -31,8 +32,8 @@ const HomeScreen = ({navigation}) => {
           />
         </Pressable>
       </View>
-      <View style={styles.displayItems}>
-        <Text style={styles.title}>New items</Text>
+      <View style={[styles.displayItems, backgroundColor.sectionContainer]}>
+        <Text style={[styles.title, text.pageTitle]}>New items</Text>
         <View style={styles.newItems}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {allItems.map(i => {
@@ -52,7 +53,7 @@ const HomeScreen = ({navigation}) => {
             })}
           </ScrollView>
         </View>
-        <Text style={styles.title}>Offer items</Text>
+        <Text style={[styles.title, text.pageTitle]}>Offer items</Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {allItems.map(i => {
@@ -72,7 +73,7 @@ const HomeScreen = ({navigation}) => {
             })}
           </ScrollView>
         </View>
-        <Text style={styles.title}>Your favorite</Text>
+        <Text style={[styles.title, text.pageTitle]}>Your favorite</Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <FavoritBox />
@@ -90,8 +91,8 @@ const styles = StyleSheet.create({
   },
   searchFilter: {flex: 1, flexDirection: 'row', alignItems: 'center'},
   filterIcon: {width: 30, height: 30, marginRight: 15},
-  displayItems: {flex: 12, backgroundColor: 'lightpink', marginVertical: 10},
+  displayItems: {flex: 12, marginVertical: 10},
   newItems: {flexDirection: 'row'},
-  title: {fontSize: 22, fontWeight: '900', marginLeft: 10},
+  title: {marginLeft: 10},
 });
 export default HomeScreen;

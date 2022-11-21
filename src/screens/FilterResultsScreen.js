@@ -15,14 +15,17 @@ import {localImages} from '../data/localImages';
 import FilterDropdown from '../components/FilterDropdown';
 import FilterButton from '../components/FilterButton';
 import ResultBox from '../components/ResultBox';
+import {text, backgroundColor} from '../style/Style';
 
 const FilterResultsScreen = ({navigation, route}) => {
   const {filteredData} = route.params;
 
   return (
-    <ScrollView>
-      <View style={styles.pageContainer}>
-        <Text style={styles.pageTitle}>Results of filltering</Text>
+    <View style={[styles.pageContainer, backgroundColor.pageContainer]}>
+      <ScrollView>
+        <Text style={[styles.pageTitle, text.pageTitle]}>
+          Results of filltering
+        </Text>
         <View style={styles.displayItemsContainer}>
           {filteredData.map(i => {
             return (
@@ -38,17 +41,18 @@ const FilterResultsScreen = ({navigation, route}) => {
             );
           })}
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   pageContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  pageTitle: {fontSize: 22, fontWeight: '800', marginVertical: 20},
+  pageTitle: {marginVertical: 20},
   displayItemsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',

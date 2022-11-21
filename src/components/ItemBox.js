@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, Pressable} from 'react-native';
+import {text} from '../style/Style';
 
 const ItemBox = ({image, name, type, price, unit, onPress}) => {
   return (
@@ -10,11 +11,11 @@ const ItemBox = ({image, name, type, price, unit, onPress}) => {
           source={image} //props = image
         />
         <View style={styles.itemInfo}>
-          <Text style={styles.itemName}>{name}</Text>
-          <Text style={styles.itemType}>{type}</Text>
+          <Text style={text.title}>{name}</Text>
+          <Text style={text.small}>{type}</Text>
           <View style={styles.PriceUnit}>
-            <Text style={styles.itemPrice}>{price}kr</Text>
-            <Text style={styles.itemUnit}>/{unit}</Text>
+            <Text style={text.large}>{price}kr</Text>
+            <Text style={text.small}>/{unit}</Text>
           </View>
         </View>
       </Pressable>
@@ -32,10 +33,6 @@ const styles = StyleSheet.create({
   },
   itemImage: {width: 200, height: 200, resizeMode: 'contain', borderRadius: 10},
   itemInfo: {marginLeft: 10},
-  itemName: {fontSize: 22, fontWeight: '600'},
-  itemType: {fontSize: 14},
   PriceUnit: {flexDirection: 'row', alignItems: 'center'},
-  itemPrice: {fontSize: 18, fontWeight: '600'},
-  itemUnit: {fontSize: 14},
 });
 export default ItemBox;

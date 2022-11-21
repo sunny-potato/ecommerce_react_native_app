@@ -5,6 +5,7 @@ import DisplayItems from '../components/DisplayItems';
 import useApi from '../data/api';
 import Data from '../data/data.json';
 import {localImages} from '../data/localImages';
+import {text, backgroundColor} from '../style/Style';
 
 const itemData = Data.items;
 
@@ -23,14 +24,14 @@ const ItemScreen = ({navigation, route}) => {
       return (
         <View>
           <View style={extraStyles.extraInfoBox}>
-            <Text>Sale period</Text>
-            <Text>{currentItem.data.period}</Text>
+            <Text style={text.small}>Sale period</Text>
+            <Text style={text.medium}>{currentItem.data.period}</Text>
           </View>
           <View style={extraStyles.extraInfoBox}>
-            <Text style={{textDecorationLine: 'line-through'}}>
+            <Text style={[text.small, {textDecorationLine: 'line-through'}]}>
               Original price {originalPrice}kr
             </Text>
-            <Text>{currentItem.data.discount}% OFF</Text>
+            <Text style={text.medium}>{currentItem.data.discount}% OFF</Text>
           </View>
         </View>
       );
@@ -38,11 +39,11 @@ const ItemScreen = ({navigation, route}) => {
   };
   // I want to add "tag info" ex) new, sale, organic, like
   return (
-    <View style={styles.pageContainer}>
+    <View style={[styles.pageContainer, backgroundColor.pageContainer]}>
       <Image style={styles.itemImage} source={localImages[id - 1]} />
       <View style={styles.itemInfo}>
         <View style={styles.nameImageBox}>
-          <Text style={styles.itemName}>{currentItem.item}</Text>
+          <Text style={text.itemTitle}>{currentItem.item}</Text>
           <Pressable>
             <Image
               style={styles.likeIcon}
@@ -50,13 +51,15 @@ const ItemScreen = ({navigation, route}) => {
             />
           </Pressable>
         </View>
-        <Text style={styles.descriptionText}>Description </Text>
-        <Text style={styles.itemDescription}>{currentItem.description}</Text>
+        <Text style={text.large}>Description </Text>
+        <Text style={text.large}>{currentItem.description}</Text>
         {extraInfo()}
         <View style={styles.priceUnit}>
-          <Text>Price</Text>
-          <Text style={styles.itemPrice}>{currentItem.price}kr</Text>
-          <Text style={styles.itemUnit}>/{currentItem.unit}</Text>
+          <Text style={text.medium}>Price</Text>
+          <Text style={[styles.itemPrice, text.pageTitle]}>
+            {currentItem.price}kr
+          </Text>
+          <Text style={text.medium}>/{currentItem.unit}</Text>
         </View>
       </View>
     </View>
@@ -64,25 +67,25 @@ const ItemScreen = ({navigation, route}) => {
 };
 
 const styles = StyleSheet.create({
-  pageContainer: {flex: 1, backgroundColor: 'lightgreen'},
+  pageContainer: {flex: 1},
   itemImage: {width: 400, height: 350, resizeMode: 'cover'},
   itemInfo: {padding: 20},
   nameImageBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  itemName: {fontSize: 28, fontWeight: '900'},
+  // itemName: {fontSize: 28, fontWeight: '900'},
   likeIcon: {width: 35, height: 35},
-  descriptionText: {fontSize: 18, fontWeight: '900'},
-  itemDescription: {fontSize: 18},
+  // descriptionText: {fontSize: 18, fontWeight: '900'},
+  // itemDescription: {fontSize: 18},
   priceUnit: {flexDirection: 'row'},
-  itemPrice: {marginLeft: 'auto', fontSize: 22, fontWeight: '500'},
-  itemUnit: {},
+  itemPrice: {marginLeft: 'auto'},
+  // itemUnit: {},
 });
 
 const extraStyles = StyleSheet.create({
   extraInfoBox: {
-    backgroundColor: 'yellow',
+    // backgroundColor: 'yellow',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },

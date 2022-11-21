@@ -14,6 +14,7 @@ import Data from '../data/data.json';
 import {localImages} from '../data/localImages';
 import FilterDropdown from '../components/FilterDropdown';
 import FilterButton from '../components/FilterButton';
+import {text, backgroundColor} from '../style/Style';
 
 const typesList = ['Vegetables', 'Fruits', 'Meats', 'Seafoods'];
 const originsList = [
@@ -66,9 +67,11 @@ const FilterScreen = ({navigation, route}) => {
   });
 
   return (
-    <ScrollView horizontal={false}>
-      <View style={styles.pageContainer}>
-        <Text style={styles.pageTitle}>Choose what you want</Text>
+    <View style={[styles.pageContainer, backgroundColor.pageContainer]}>
+      <ScrollView horizontal={false}>
+        <Text style={[styles.pageTitle, text.pageTitle]}>
+          Choose what you want
+        </Text>
         <View style={styles.filterDropdown}>
           <FilterDropdown
             list={typesList}
@@ -84,7 +87,7 @@ const FilterScreen = ({navigation, route}) => {
           />
         </View>
         <View style={styles.filterButtonContainer}>
-          <Text style={styles.filterButtonTitle}>Items are </Text>
+          <Text style={[styles.filterButtonText, text.large]}>Items are </Text>
           <View style={styles.filterButton}>
             <FilterButton
               buttonTitle={'on sale '}
@@ -112,22 +115,22 @@ const FilterScreen = ({navigation, route}) => {
               return navigation.navigate('FilterResults', {filteredData});
             }
           }}>
-          <Text style={styles.applyButton}>Apply filters</Text>
+          <Text style={[styles.applyButton, text.large]}>Apply filters</Text>
         </Pressable>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   pageContainer: {flex: 1, alignItems: 'center'},
-  pageTitle: {marginVertical: 10, fontSize: 20, fontWeight: '800'},
+  pageTitle: {marginVertical: 10},
   filterDropdown: {
     flexDirection: 'column',
     alignItems: 'center',
   },
   filterButtonContainer: {marginVertical: 10},
-  filterButtonTitle: {fontSize: 18, fontWeight: '800', marginBottom: 5},
+  filterButtonText: {marginBottom: 5},
   filterButton: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -143,8 +146,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   applyButton: {
-    fontSize: 18,
-    fontWeight: '800',
     padding: 5,
   },
 });
