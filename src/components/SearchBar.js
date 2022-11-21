@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {
-  SafeAreaView,
   View,
   StyleSheet,
   TextInput,
@@ -73,7 +72,6 @@ const styles = StyleSheet.create({
     height: 40,
     paddingRight: 10,
     margin: 15,
-    // position: 'relative',
   },
   searchIcon: {width: 20, height: 20},
   textInput: {flex: 1},

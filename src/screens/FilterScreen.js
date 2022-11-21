@@ -4,8 +4,8 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
   Pressable,
+  Alert,
 } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import DisplayItems from '../components/DisplayItems';
@@ -27,23 +27,30 @@ const originsList = [
   'Germany',
 ];
 const FilterScreen = ({navigation, route}) => {
-  const [checkedTypesList, setCheckedTypesList] = useState([]);
-  const [checkedOriginsList, setCheckedOriginsList] = useState([]);
+  const [checkedTypesList, setCheckedTypesList] = useState([
+    'Vegetables',
+    'Fruits',
+    'Meats',
+    'Seafoods',
+  ]);
+  const [checkedOriginsList, setCheckedOriginsList] = useState([
+    'Mexico',
+    'Chile',
+    'Spain',
+    'Norway',
+    'Italy',
+    'Brasil',
+    'New Zealand',
+    'Germany',
+  ]);
   const [isSaleClicked, setIsSaleClicked] = useState(false);
   const [isOrganicClicked, setIsOrganicClicked] = useState(false);
   const [isNewClicked, setIsNewClicked] = useState(false);
-  console.log('-------------------------------------------');
-  // console.log(checkedOriginsList);
-  // console.log(isSaleClicked);
-  // console.log(isOrganicClicked);
-  // console.log(isNewClicked);
   const {allItems} = route.params;
-  // const [filteredData, setFilteredData] = useState();
 
   const filterQuery = (text, queryList) => {
     return queryList.some(query => {
       query = query.toLowerCase();
-      // console.log('query : ', query);
       return text.toLowerCase().includes(query);
     });
   };
@@ -51,13 +58,12 @@ const FilterScreen = ({navigation, route}) => {
   const filteredData = allItems.filter(item => {
     const typeQuery = filterQuery(item.type, checkedTypesList);
     const originQuery = filterQuery(item.origin, checkedOriginsList);
-    const sale = isSaleClicked && item.onsale;
-    const organic = isOrganicClicked && item.isorganic === true;
-    // const newItem = isNewClicked && item.isnew === true;
+    const sale = isSaleClicked ? item.onsale === true : true;
+    const organic = isOrganicClicked ? item.isorganic === true : true;
+    const newItem = isNewClicked ? item.isnew === true : true;
 
-    return typeQuery && originQuery && sale && organic;
+    return typeQuery && originQuery && sale && organic && newItem;
   });
-  console.log('......', filteredData.length);
 
   return (
     <ScrollView horizontal={false}>
@@ -99,7 +105,13 @@ const FilterScreen = ({navigation, route}) => {
         </View>
         <Pressable
           style={styles.applyButtonContainer}
-          onPress={() => navigation.navigate('FilterResults')}>
+          onPress={() => {
+            if (filteredData.length === 0) {
+              return Alert.alert('No results found');
+            } else {
+              return navigation.navigate('FilterResults', {filteredData});
+            }
+          }}>
           <Text style={styles.applyButton}>Apply filters</Text>
         </Pressable>
       </View>

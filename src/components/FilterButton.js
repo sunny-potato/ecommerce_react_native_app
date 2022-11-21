@@ -18,7 +18,7 @@ const FilterButton = ({buttonTitle, isChekced, setIsChecked}) => {
   return (
     <Pressable
       style={{
-        borderRadius: 15,
+        borderRadius: 10,
         backgroundColor: isChekced ? 'lightpink' : 'lightblue',
       }}
       onPress={() => (isChekced ? setIsChecked(false) : setIsChecked(true))}>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 18,
     fontWeight: '600',
-    padding: 5,
+    padding: 3,
     // borderWidth: 1,
   },
 });
