@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, Pressable} from 'react-native';
 
-const ItemBox = ({image, name, type, price, unit, onPress}) => {
+const ResultBox = ({image, name, type, price, unit, onPress}) => {
   return (
     <View style={styles.itemBox}>
       <Pressable onPress={onPress}>
@@ -24,13 +24,13 @@ const ItemBox = ({image, name, type, price, unit, onPress}) => {
 
 const styles = StyleSheet.create({
   itemBox: {
-    width: 200,
-    height: 280,
+    width: 170,
+    height: 250,
     backgroundColor: 'lightgreen',
     borderRadius: 10,
     margin: 10,
   },
-  itemImage: {width: 200, height: 200, resizeMode: 'contain', borderRadius: 10},
+  itemImage: {width: 170, height: 170, resizeMode: 'contain', borderRadius: 10},
   itemInfo: {marginLeft: 10},
   itemName: {fontSize: 22, fontWeight: '600'},
   itemType: {fontSize: 14},
@@ -38,4 +38,4 @@ const styles = StyleSheet.create({
   itemPrice: {fontSize: 18, fontWeight: '600'},
   itemUnit: {fontSize: 14},
 });
-export default ItemBox;
+export default ResultBox;

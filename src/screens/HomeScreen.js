@@ -4,23 +4,18 @@ import {
   StyleSheet,
   Text,
   Image,
-  Alert,
   Pressable,
   ScrollView,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import SearchBar from '../components/SearchBar';
-// import DisplayItems from '../components/DisplayItems';
 import {localImages} from '../data/localImages';
-import FilterScreen from './FilterScreen';
 import ItemBox from '../components/ItemBox';
 import OfferBox from '../components/OfferBox';
 import FavoritBox from '../components/FavoritBox';
 import {useApi} from '../data/api';
 
 const HomeScreen = ({navigation}) => {
-  const {data: allItems, setData} = useApi('/items');
-  // console.log('TEST', allItems);
+  const {data: allItems} = useApi('/items');
 
   if (allItems === undefined) {
     return <Text>Loading...</Text>;
@@ -28,12 +23,8 @@ const HomeScreen = ({navigation}) => {
   return (
     <View style={styles.pageContainer}>
       <View style={styles.searchFilter}>
-        <SearchBar
-          data={allItems}
-          navigation={navigation}
-          // onPress={() => navigation.navigate('Item', {id: i.id})}
-        />
-        <Pressable onPress={() => navigation.navigate('Filters')}>
+        <SearchBar data={allItems} navigation={navigation} />
+        <Pressable onPress={() => navigation.navigate('Filters', {allItems})}>
           <Image
             style={styles.filterIcon}
             source={require('../icons/filter.png')}
