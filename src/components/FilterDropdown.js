@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Image, Pressable, Button} from 'react-native';
 import SearchBar from './SearchBar';
-import DisplayItems from './DisplayItems';
+
 import useApi from '../data/api';
 import Data from '../data/data.json';
 import {localImages} from '../data/localImages';

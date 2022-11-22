@@ -1,4 +1,4 @@
-import {View, StyleSheet, Text, Image, Pressable} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const text = StyleSheet.create({
   pageTitle: {fontSize: 22, fontWeight: '600', color: 'black'},
@@ -17,3 +17,4 @@ export const backgroundColor = StyleSheet.create({
     backgroundColor: 'white',
   },
 });
+//forom here

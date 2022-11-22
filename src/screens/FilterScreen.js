@@ -8,7 +8,6 @@ import {
   Alert,
 } from 'react-native';
 import SearchBar from '../components/SearchBar';
-import DisplayItems from '../components/DisplayItems';
 import useApi from '../data/api';
 import Data from '../data/data.json';
 import {localImages} from '../data/localImages';

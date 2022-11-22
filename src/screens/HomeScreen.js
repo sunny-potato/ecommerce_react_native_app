@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -11,12 +11,26 @@ import SearchBar from '../components/SearchBar';
 import {localImages} from '../data/localImages';
 import ItemBox from '../components/ItemBox';
 import OfferBox from '../components/OfferBox';
-import FavoritBox from '../components/FavoritBox';
+import FavoriteBox from '../components/FavoriteBox';
 import {useApi} from '../data/api';
 import {backgroundColor, text} from '../style/Style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
   const {data: allItems} = useApi('/items');
+  const [favoritesList, setFavoritesList] = useState();
+
+  const getFavoritesData = async () => {
+    try {
+      const favorites = JSON.parse(await AsyncStorage.getItem('favoriteList'));
+      setFavoritesList(favorites);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    getFavoritesData();
+  }, []);
 
   if (allItems === undefined) {
     return <Text>Loading...</Text>;
@@ -73,11 +87,24 @@ const HomeScreen = ({navigation}) => {
             })}
           </ScrollView>
         </View>
-        <Text style={[styles.title, text.pageTitle]}>Your favorite</Text>
+        <Text style={[styles.title, text.pageTitle]}>Your favorites</Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <FavoritBox />
-            <FavoritBox />
+            {favoritesList !== undefined || favoritesList !== null ? (
+              allItems
+                .filter(i => favoritesList.some(each => each === i.id))
+                .map(i => {
+                  return (
+                    <FavoriteBox
+                      key={i.id}
+                      image={localImages[i.id - 1]}
+                      onPress={() => navigation.navigate('Item', {id: i.id})}
+                    />
+                  );
+                })
+            ) : (
+              <Text>No found favorites</Text>
+            )}
           </ScrollView>
         </View>
       </View>
