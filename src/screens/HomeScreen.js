@@ -11,30 +11,40 @@ import SearchBar from '../components/SearchBar';
 import {localImages} from '../data/localImages';
 import ItemBox from '../components/ItemBox';
 import OfferBox from '../components/OfferBox';
-import FavoriteBox from '../components/FavoriteBox';
+import OrganicBox from '../components/OrganicBox';
 import {useApi} from '../data/api';
 import {text, getStyleSheet} from '../style/Style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
   const {data: allItems} = useApi('/items');
-  const [favoritesList, setFavoritesList] = useState();
+  // const [favoritesList, setFavoritesList] = useState();
   const [backgroundMode, setBackgroundMode] = useState(true);
+  const [language, setLanguage] = useState(true);
   const externalStyle = getStyleSheet(backgroundMode);
 
-  console.log('----', backgroundMode); // false -> dark
-
+  console.log('----------------------------');
   useEffect(() => {
     const getStoredData = async () => {
       try {
-        const favorites = JSON.parse(
-          await AsyncStorage.getItem('favoriteList'),
-        );
-        setFavoritesList(favorites);
+        // const favorites = JSON.parse(
+        //   await AsyncStorage.getItem('favoriteList'),
+        // );
+        // setFavoritesList(favorites);
         const backgroundTheme = JSON.parse(
           await AsyncStorage.getItem('backgroundMode'),
         );
         setBackgroundMode(backgroundTheme);
+        const languageSetting = JSON.parse(
+          await AsyncStorage.getItem('language'),
+        );
+        setLanguage(languageSetting);
+        console.log(
+          'stored data : bacground - ',
+          backgroundTheme,
+          'language - ',
+          languageSetting,
+        );
       } catch (e) {
         console.error(e);
       }
@@ -42,15 +52,34 @@ const HomeScreen = ({navigation}) => {
     getStoredData();
   }, []);
 
+  console.log(
+    'pageSetting : background - ',
+    backgroundMode,
+    'language - ',
+    language,
+  );
+
   if (allItems === undefined) {
     return <Text>Loading...</Text>;
   }
+  const dataByLanguage = language ? allItems.english : allItems.norwegian;
 
   return (
     <View style={[styles.pageContainer, externalStyle.pageContainer]}>
       <View style={styles.searchFilter}>
-        <SearchBar data={allItems} navigation={navigation} />
-        <Pressable onPress={() => navigation.navigate('Filters', {allItems})}>
+        <SearchBar
+          data={allItems}
+          navigation={navigation}
+          language={language}
+        />
+        <Pressable
+          onPress={() =>
+            navigation.navigate('Filters', {
+              allData: allItems,
+              language: language,
+              backgroundMode: backgroundMode,
+            })
+          }>
           <Image
             style={styles.filterIcon}
             source={require('../icons/filter.png')}
@@ -59,16 +88,21 @@ const HomeScreen = ({navigation}) => {
       </View>
       <View style={[styles.displayItems, externalStyle.sectionContainer]}>
         <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
-          New items
+          {language ? 'New items' : 'Nye varer'}
         </Text>
         <View style={styles.newItems}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {allItems.map(i => {
+            {dataByLanguage.map(i => {
               if (i.isnew) {
                 return (
                   <ItemBox
                     key={i.id}
-                    onPress={() => navigation.navigate('Item', {id: i.id})}
+                    onPress={() =>
+                      navigation.navigate('Item', {
+                        id: i.id,
+                        language: language,
+                      })
+                    }
                     image={localImages[i.id - 1]}
                     name={i.item}
                     type={i.type}
@@ -83,11 +117,11 @@ const HomeScreen = ({navigation}) => {
           </ScrollView>
         </View>
         <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
-          Offer items
+          {language ? 'Sale items' : 'Tilbudsvarer'}
         </Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {allItems.map(i => {
+            {dataByLanguage.map(i => {
               if (i.onsale) {
                 return (
                   <OfferBox
@@ -107,25 +141,24 @@ const HomeScreen = ({navigation}) => {
           </ScrollView>
         </View>
         <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
-          Your favorites
+          {language ? 'Oragnic items' : 'Økologiske varer'}
         </Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {favoritesList !== undefined || favoritesList !== null ? (
-              allItems
-                .filter(i => favoritesList.some(each => each === i.id))
-                .map(i => {
+            {dataByLanguage
+              .slice(0)
+              .reverse()
+              .map(i => {
+                if (i.isorganic) {
                   return (
-                    <FavoriteBox
+                    <OrganicBox
                       key={i.id}
                       image={localImages[i.id - 1]}
                       onPress={() => navigation.navigate('Item', {id: i.id})}
                     />
                   );
-                })
-            ) : (
-              <Text>No found favorites</Text>
-            )}
+                }
+              })}
           </ScrollView>
         </View>
       </View>

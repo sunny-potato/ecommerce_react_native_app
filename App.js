@@ -7,6 +7,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import FilterScreen from './src/screens/FilterScreen';
 import ItemScreen from './src/screens/ItemScreen';
 import FilterResultsScreen from './src/screens/FilterResultsScreen';
+import FavoritesScreen from './src/screens/FavoritesScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import {getStyleSheet} from './src/style/Style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,8 +30,24 @@ const LandingNavigation = () => {
           options={{title: 'Home'}}
         />
         <Stack.Screen name="Filters" component={FilterScreen} />
-        <Stack.Screen name="FilterResults" component={FilterResultsScreen} />
+        <Stack.Screen
+          name="FilterResults"
+          component={FilterResultsScreen}
+          options={{title: 'Filter results'}}
+        />
         <Stack.Screen name="Item" component={ItemScreen} />
+      </Stack.Navigator>
+    );
+  };
+  const FavoritesStackScreen = () => {
+    return (
+      <Stack.Navigator
+        initialRouteName="Favorites"
+        screenOptions={{
+          headerStyle: {backgroundColor: externalStyle.pageContainer},
+          headerTintColor: {color: externalStyle.textColor},
+        }}>
+        <Stack.Screen name="Favorites" component={FavoritesScreen} />
       </Stack.Navigator>
     );
   };
@@ -85,11 +102,26 @@ const LandingNavigation = () => {
           }}
         />
         <Tab.Screen
+          name="FavoritesTab"
+          component={FavoritesStackScreen}
+          options={{
+            tabBarLabel: 'Favorites',
+            tabBarLabelStyle: {fontSize: 16, color: externalStyle.textColor},
+            tabBarStyle: {backgroundColor: externalStyle.pageContainer},
+            tabBarIcon: ({focused, color, size}) => (
+              <Image
+                source={require('./src/icons/heart.png')}
+                style={{width: 23, height: 23}}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
           name="SettingsTab"
           component={SettingsStackScreen}
           options={{
             tabBarLabel: 'Settings',
-            tabBarLabelStyle: {fontSize: 16, color: 'black'},
+            tabBarLabelStyle: {fontSize: 16, color: externalStyle.textColor},
             tabBarStyle: {backgroundColor: externalStyle.pageContainer},
             tabBarIcon: ({focused, color, size}) => (
               <Image

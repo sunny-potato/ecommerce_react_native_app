@@ -15,13 +15,12 @@ const ItemBox = ({
   return (
     <View style={[styles.itemBox, {backgroundColor: bgColor}]}>
       <Pressable onPress={onPress}>
-        <Image
-          style={styles.itemImage}
-          source={image} //props = image
-        />
+        <Image style={styles.itemImage} source={image} />
         <View style={styles.itemInfo}>
           <View style={styles.infoDetails}>
-            <Text style={[text.title, {color: textColor}]}>{name}</Text>
+            <Text style={[{marginRight: 3}, text.title, {color: textColor}]}>
+              {name}
+            </Text>
             <Text style={[text.small, {color: textColor}]}>{type}</Text>
           </View>
           <View style={styles.infoDetails}>
@@ -38,7 +37,6 @@ const styles = StyleSheet.create({
   itemBox: {
     width: 200,
     height: 260,
-    // backgroundColor: 'white',
     borderRadius: 12,
     borderColor: 'white',
     margin: 10,

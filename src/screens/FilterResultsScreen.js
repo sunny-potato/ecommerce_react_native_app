@@ -1,28 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {ScrollView, View, StyleSheet, Text} from 'react-native';
 import {localImages} from '../data/localImages';
 import ResultBox from '../components/ResultBox';
 import {text, getStyleSheet} from '../style/Style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FilterResultsScreen = ({navigation, route}) => {
+  const language = route.params.language;
+  const backgroundMode = route.params.backgroundMode;
   const {filteredData} = route.params;
-  const [backgroundMode, setBackgroundMode] = useState(true);
   const externalStyle = getStyleSheet(backgroundMode);
-
-  useEffect(() => {
-    const getStoredData = async () => {
-      try {
-        const backgroundTheme = JSON.parse(
-          await AsyncStorage.getItem('backgroundMode'),
-        );
-        setBackgroundMode(backgroundTheme);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    getStoredData();
-  }, []);
 
   return (
     <View style={[styles.pageContainer, externalStyle.pageContainer]}>
@@ -30,7 +16,7 @@ const FilterResultsScreen = ({navigation, route}) => {
         <View style={styles.contentContainer}>
           <Text
             style={[styles.pageTitle, text.pageTitle, externalStyle.textColor]}>
-            Filter results
+            {language ? 'Filter results' : 'Filtrer resultater'}
           </Text>
         </View>
         <View style={styles.displayItemsContainer}>
@@ -58,8 +44,6 @@ const FilterResultsScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
   contentContainer: {alignItems: 'center'},
   pageTitle: {marginVertical: 20},

@@ -8,12 +8,15 @@ import {
   Pressable,
 } from 'react-native';
 
-const SearchBar = ({data, navigation}) => {
+const SearchBar = ({data, navigation, language}) => {
   const [query, setQuery] = useState('');
   const [originalData, setOriginalData] = useState(data);
 
+  const dataByLanguage = language
+    ? originalData.english
+    : originalData.norwegian;
   const lowerCaseWord = query.toLowerCase();
-  const filteredData = originalData.filter(each => {
+  const filteredData = dataByLanguage.filter(each => {
     return (
       each.item.toLowerCase().includes(lowerCaseWord) ||
       each.type.toLowerCase().includes(lowerCaseWord) ||
@@ -27,7 +30,7 @@ const SearchBar = ({data, navigation}) => {
       <View style={styles.inputBox}>
         <TextInput
           style={styles.textInput}
-          placeholder="Enter keyword"
+          placeholder={language ? 'Search product' : 'Søk vare'}
           value={query}
           onChangeText={setQuery}
         />
@@ -54,7 +57,11 @@ const SearchBar = ({data, navigation}) => {
       )}
       {query.length > 0 && filteredData.length === 0 && (
         <View style={styles.searchResultsBox}>
-          <Text>No result found</Text>
+          {language ? (
+            <Text>No result found</Text>
+          ) : (
+            <Text>Finner ingen favoritter</Text>
+          )}
         </View>
       )}
     </View>

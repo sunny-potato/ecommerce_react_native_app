@@ -11,15 +11,18 @@ import Data from '../data/data.json';
 import {localImages} from '../data/localImages';
 import {text, getStyleSheet} from '../style/Style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {tagInfo} from '../hooks/TagHandler';
+import {saleInformation} from '../hooks/SaleInformation';
 
-const itemData = Data.items;
-
-const ItemScreen = ({navigation, route}) => {
+const ItemScreen = ({route}) => {
   const {id} = route.params;
+  const {language} = route.params;
+  const itemData = language ? Data.items.english : Data.items.norwegian;
   const currentItem = itemData[id - 1];
   const [isLiked, setIsliked] = useState(false);
   const [favoritesList, setFavoritesList] = useState([]);
   const [backgroundMode, setBackgroundMode] = useState(true);
+
   const externalStyle = getStyleSheet(backgroundMode);
 
   useEffect(() => {
@@ -76,47 +79,56 @@ const ItemScreen = ({navigation, route}) => {
   const saveFavoritesList = async value => {
     try {
       await AsyncStorage.setItem('favoriteList', JSON.stringify(value));
-      console.log('setItem');
+      // console.log('setItem');
     } catch (e) {
       console.error(e);
     }
   };
 
-  const extraInfo = () => {
-    if (currentItem.onsale) {
-      const originalPrice = (
-        currentItem.price /
-        (1 - currentItem.data.discount / 100)
-      ).toFixed(0);
+  // const saleInformation = () => {
+  //   if (currentItem.onsale) {
+  //     const originalPrice = (
+  //       currentItem.price /
+  //       (1 - currentItem.data.discount / 100)
+  //     ).toFixed(0);
 
-      return (
-        <View>
-          <View style={extraStyles.extraInfoBox}>
-            <Text style={[text.small, externalStyle.textColor]}>
-              Sale period
-            </Text>
-            <Text style={[text.medium, externalStyle.textColor]}>
-              {currentItem.data.period}
-            </Text>
-          </View>
-          <View style={extraStyles.extraInfoBox}>
-            <Text
-              style={[
-                text.small,
-                {textDecorationLine: 'line-through'},
-                externalStyle.textColor,
-              ]}>
-              Original price {originalPrice}kr
-            </Text>
-            <Text style={[text.medium, externalStyle.textColor]}>
-              {currentItem.data.discount}% OFF
-            </Text>
-          </View>
-        </View>
-      );
-    }
-  };
-  // I want to add "tag info" ex) new, sale, organic, like
+  //     return (
+  //       <View>
+  //         <View
+  //           style={{
+  //             flexDirection: 'row',
+  //             justifyContent: 'space-between',
+  //           }}>
+  //           <Text style={[text.small, externalStyle.textColor]}>
+  //             {language ? 'Sale until' : 'Tilbud t.o.m'}
+  //           </Text>
+  //           <Text style={[text.medium, externalStyle.textColor]}>
+  //             {currentItem.data.period}
+  //           </Text>
+  //         </View>
+  //         <View
+  //           style={{
+  //             flexDirection: 'row',
+  //             justifyContent: 'space-between',
+  //           }}>
+  //           <Text
+  //             style={[
+  //               text.small,
+  //               {textDecorationLine: 'line-through'},
+  //               externalStyle.textColor,
+  //             ]}>
+  //             {language
+  //               ? `Original price ${originalPrice}kr`
+  //               : `Original pris ${originalPrice}kr`}
+  //           </Text>
+  //           <Text style={[text.small, externalStyle.textColor]}>
+  //             {currentItem.data.discount}% OFF
+  //           </Text>
+  //         </View>
+  //       </View>
+  //     );
+  //   }
+  // };
   return (
     <View style={[styles.pageContainer, externalStyle.pageContainer]}>
       <ScrollView>
@@ -140,15 +152,16 @@ const ItemScreen = ({navigation, route}) => {
               )}
             </Pressable>
           </View>
-          <Text style={[text.large, externalStyle.textColor]}>
-            Description{' '}
-          </Text>
-          <Text style={[text.medium, externalStyle.textColor]}>
+          {tagInfo(currentItem, language, text, externalStyle)}
+          <Text
+            style={[styles.description, text.medium, externalStyle.textColor]}>
             {currentItem.description}
           </Text>
-          {extraInfo()}
+          {saleInformation(currentItem, language, text, externalStyle)}
           <View style={styles.priceUnit}>
-            <Text style={[text.medium, externalStyle.textColor]}>Price</Text>
+            <Text style={[text.large, externalStyle.textColor]}>
+              {language ? 'Price' : 'Pris'}
+            </Text>
             <Text
               style={[
                 styles.itemPrice,
@@ -157,7 +170,8 @@ const ItemScreen = ({navigation, route}) => {
               ]}>
               {currentItem.price}kr
             </Text>
-            <Text style={[text.medium, externalStyle.textColor]}>
+            <Text style={[text.small, externalStyle.textColor]}>
+              {' '}
               /{currentItem.unit}
             </Text>
           </View>
@@ -169,22 +183,24 @@ const ItemScreen = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   pageContainer: {flex: 1},
-  itemImage: {width: 400, height: 350, resizeMode: 'cover'},
+  itemImage: {width: 400, height: 350, resizeMode: 'contain'},
   itemInfo: {padding: 20},
   nameImageBox: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   likeIcon: {width: 35, height: 35},
+  tagInfo: {flexDirection: 'row'},
+  description: {marginVertical: 10},
   priceUnit: {flexDirection: 'row', alignItems: 'center'},
   itemPrice: {marginLeft: 'auto'},
 });
 
-const extraStyles = StyleSheet.create({
-  extraInfoBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-});
+// const extraStyles = StyleSheet.create({
+//   extraInfoBox: {
+//     flexDirection: 'row',
+//     justifyContent: 'space-between',
+//   },
+// });
 
 export default ItemScreen;

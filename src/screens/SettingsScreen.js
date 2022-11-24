@@ -7,28 +7,48 @@ import {getStyleSheet} from '../style/Style';
 const SettingsScreen = () => {
   const [isLight, setIsLight] = useState(true);
   const [isEnglish, setIsEnglish] = useState(true);
-  const [backgroundMode, setBackgroundMode] = useState(true);
-  const externalStyle = getStyleSheet(backgroundMode);
-
-  console.log('.......', backgroundMode);
+  const externalStyle = getStyleSheet(isLight);
+  // const [backgroundMode, setBackgroundMode] = useState(true);
+  // const [language, setLanguage] = useState(true);
+  console.log('isLight', isLight);
+  console.log('isEnlish', isEnglish);
 
   useEffect(() => {
     const saveBackgroundMode = async () => {
       try {
         if (isLight) {
-          setBackgroundMode(true);
+          // setBackgroundMode(true);
           await AsyncStorage.setItem('backgroundMode', JSON.stringify(true));
         } else {
-          setBackgroundMode(false);
+          // setBackgroundMode(false);
           await AsyncStorage.setItem('backgroundMode', JSON.stringify(false));
         }
       } catch (e) {
         console.error(e);
       }
-      console.log('#####', await AsyncStorage.getItem('backgroundMode'));
+      console.log(
+        'background#####',
+        await AsyncStorage.getItem('backgroundMode'),
+      );
     };
     saveBackgroundMode();
   }, [isLight]);
+
+  useEffect(() => {
+    const saveLanguage = async () => {
+      try {
+        if (isEnglish) {
+          await AsyncStorage.setItem('language', JSON.stringify(true));
+        } else {
+          await AsyncStorage.setItem('language', JSON.stringify(false));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      console.log('language#####', await AsyncStorage.getItem('language'));
+    };
+    saveLanguage();
+  }, [isEnglish]);
 
   useEffect(() => {
     const getStoredData = async () => {
@@ -36,9 +56,17 @@ const SettingsScreen = () => {
         const backgroundTheme = JSON.parse(
           await AsyncStorage.getItem('backgroundMode'),
         );
-        console.log('.....................', backgroundTheme);
-        // setBackgroundMode(backgroundTheme);
         setIsLight(backgroundTheme);
+        const languageSetting = JSON.parse(
+          await AsyncStorage.getItem('language'),
+        );
+        setIsEnglish(languageSetting);
+        console.log(
+          '--------------stored data : background - ',
+          backgroundTheme,
+          '---------------langugage - ',
+          languageSetting,
+        );
       } catch (e) {
         console.error(e);
       }
@@ -51,24 +79,24 @@ const SettingsScreen = () => {
       <View style={styles.contentContainer}>
         <View style={styles.contentSection}>
           <SettingBox
-            title={'Background mode'}
-            choiceOne={'Light mode'}
-            choiceTwo={'Dark mode'}
+            title={isEnglish ? 'Background mode' : 'Bakgrunnsmodus'}
+            choiceOne={isEnglish ? 'Light mode' : 'Lys modus'}
+            choiceTwo={isEnglish ? 'Dark mode' : 'Mørk modus'}
             isChoiceOne={isLight}
             setIsChoiceOne={setIsLight}
-            textColor={backgroundMode ? 'black' : '#f3f6f4'}
-            bgColor={backgroundMode ? 'white' : '#36384c'}
+            textColor={isLight ? 'black' : '#f3f6f4'}
+            bgColor={isLight ? '#f3f6f4' : '#36384c'}
           />
         </View>
         <View style={styles.contentSection}>
           <SettingBox
-            title={'Language'}
-            choiceOne={'English'}
-            choiceTwo={'Norwegian'}
+            title={isEnglish ? 'Language' : 'Språk'}
+            choiceOne={isEnglish ? 'English' : 'Engelsk'}
+            choiceTwo={isEnglish ? 'Norwegian' : 'Norsk'}
             isChoiceOne={isEnglish}
             setIsChoiceOne={setIsEnglish}
-            textColor={backgroundMode ? 'black' : '#f3f6f4'}
-            bgColor={backgroundMode ? 'white' : '#36384c'}
+            textColor={isLight ? 'black' : '#f3f6f4'}
+            bgColor={isLight ? '#f3f6f4' : '#36384c'}
           />
         </View>
       </View>

@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, Text, Image, Alert, Pressable} from 'react-native';
 
-const FavoriteBox = ({image, onPress}) => {
+const OrganicBox = ({image, onPress}) => {
   return (
     <View>
       <Pressable onPress={onPress}>
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
-export default FavoriteBox;
+export default OrganicBox;
