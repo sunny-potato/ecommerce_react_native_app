@@ -1,13 +1,6 @@
-import React, {useState} from 'react';
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  Pressable,
-} from 'react-native';
-import {text, backgroundColor} from '../style/Style';
+import React from 'react';
+import {View, StyleSheet, Text, Image, Pressable} from 'react-native';
+import {text} from '../style/Style';
 
 const SettingBox = ({
   title,
@@ -15,17 +8,21 @@ const SettingBox = ({
   choiceTwo,
   isChoiceOne,
   setIsChoiceOne,
+  textColor,
+  bgColor,
 }) => {
-  //   const [isChoiceOne, setIsChoiceOne] = useState(false);
-  //   console.log(isChoiceOne);
   return (
     <View>
-      <Text style={[styles.titleText, text.large]}>{title}</Text>
-      <View style={styles.choiceSelction}>
+      <Text style={[styles.titleText, text.large, {color: textColor}]}>
+        {title}
+      </Text>
+      <View style={[styles.choiceSelction, {backgroundColor: bgColor}]}>
         <Pressable
           style={styles.eachChoice}
           onPress={() => setIsChoiceOne(true)}>
-          <Text style={[styles.choiceText, text.medium]}>{choiceOne}</Text>
+          <Text style={[styles.choiceText, text.medium, {color: textColor}]}>
+            {choiceOne}
+          </Text>
           {isChoiceOne ? (
             <Image
               style={styles.checkIcon}
@@ -38,7 +35,9 @@ const SettingBox = ({
         <Pressable
           style={styles.eachChoice}
           onPress={() => setIsChoiceOne(false)}>
-          <Text style={[styles.choiceText, text.medium]}>{choiceTwo}</Text>
+          <Text style={[styles.choiceText, text.medium, {color: textColor}]}>
+            {choiceTwo}
+          </Text>
           {isChoiceOne ? (
             <Text>{''}</Text>
           ) : (
@@ -59,16 +58,17 @@ const styles = StyleSheet.create({
   },
   choiceSelction: {
     flexDirection: 'row',
-    backgroundColor: 'white',
     justifyContent: 'space-between',
+    borderRadius: 10,
   },
   eachChoice: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: 130,
-    backgroundColor: 'orange',
+    backgroundColor: '#f26d52',
     paddingHorizontal: 7,
+    borderRadius: 10,
   },
   choiceText: {
     paddingVertical: 5,

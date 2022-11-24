@@ -1,12 +1,12 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import axios from 'axios';
 
-const baseURL = 'https://ab0d-84-209-59-19.eu.ngrok.io';
+const baseURL = 'https://6b14-84-209-59-19.eu.ngrok.io';
 
 export const useApi = path => {
   const [data, setData] = useState();
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       const response = await axios.get(baseURL + path);
       const responseData = await response.data;
@@ -14,11 +14,11 @@ export const useApi = path => {
     } catch (error) {
       console.error('error : ', error);
     }
-  };
+  }, [path]);
 
   useEffect(() => {
     getData(path);
-  }, [path]);
+  }, [getData, path]);
 
   return {data, getData};
 };

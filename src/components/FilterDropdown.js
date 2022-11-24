@@ -1,14 +1,26 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Image, Pressable, Button} from 'react-native';
-import SearchBar from './SearchBar';
-
-import useApi from '../data/api';
-import Data from '../data/data.json';
-import {localImages} from '../data/localImages';
-import {text} from '../style/Style';
+import {View, StyleSheet, Text, Image, Pressable} from 'react-native';
+import {text, getStyleSheet} from '../style/Style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const FilterDropdown = ({list, categoryTitle, checkedList, setCheckedList}) => {
   const [isChecked, setIsChecked] = useState(false);
+  const [backgroundMode, setBackgroundMode] = useState(true);
+  const externalStyle = getStyleSheet(backgroundMode);
+
+  useEffect(() => {
+    const getStoredData = async () => {
+      try {
+        const backgroundTheme = JSON.parse(
+          await AsyncStorage.getItem('backgroundMode'),
+        );
+        setBackgroundMode(backgroundTheme);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getStoredData();
+  }, []);
 
   return (
     <View style={styles.filterBox}>
@@ -17,11 +29,13 @@ const FilterDropdown = ({list, categoryTitle, checkedList, setCheckedList}) => {
           isChecked ? setIsChecked(false) : setIsChecked(true);
         }}>
         <View style={styles.category}>
-          <Text style={text.medium}>{categoryTitle}</Text>
+          <Text style={[text.medium, externalStyle.textColor]}>
+            {categoryTitle}
+          </Text>
           {isChecked ? (
-            <Text style={styles.minusIcon}>-</Text>
+            <Text style={[styles.minusIcon, externalStyle.textColor]}>-</Text>
           ) : (
-            <Text style={styles.plusIcon}>+</Text>
+            <Text style={[styles.plusIcon, externalStyle.textColor]}>+</Text>
           )}
         </View>
       </Pressable>
@@ -65,7 +79,7 @@ const FilterDropdown = ({list, categoryTitle, checkedList, setCheckedList}) => {
 const styles = StyleSheet.create({
   filterBox: {width: 250},
   category: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#f26d52',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -74,10 +88,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   categoryTitle: {fontSize: 18, fontWeight: '600'},
-  minusIcon: {fontSize: 22, fontWeight: '900', color: 'black'},
-  plusIcon: {fontSize: 20, fontWeight: '900', color: 'black'},
+  minusIcon: {fontSize: 22, fontWeight: '700'},
+  plusIcon: {fontSize: 20, fontWeight: '700'},
   subCategory: {
-    backgroundColor: 'lightgreen',
+    backgroundColor: '#f5a374',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     alignItems: 'center',

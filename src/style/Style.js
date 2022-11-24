@@ -1,20 +1,45 @@
 import {StyleSheet} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const text = StyleSheet.create({
-  pageTitle: {fontSize: 22, fontWeight: '600', color: 'black'},
-  itemTitle: {fontSize: 28, fontWeight: '900', color: 'black'},
-  title: {fontSize: 20, fontWeight: '500', color: 'black'},
-  large: {fontSize: 18, fontWeight: '500', color: 'black'},
-  medium: {fontSize: 16, fontWeight: '500', color: 'black'},
+  pageTitle: {
+    fontSize: 22,
+  },
+  itemTitle: {fontSize: 28, fontWeight: '600'},
+  title: {fontSize: 20},
+  large: {fontSize: 18, fontWeight: '600'},
+  medium: {fontSize: 16, color: 'black'},
   small: {fontSize: 12, color: 'black'},
 });
 
-export const backgroundColor = StyleSheet.create({
+export const lightModeStyle = StyleSheet.create({
   pageContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#f3f6f4',
   },
   sectionContainer: {
-    backgroundColor: 'white',
+    backgroundColor: '#f3f6f4',
   },
+  boxContainer: {backgroundColor: 'white'},
+
+  textColor: {color: 'black'},
+
+  textSubColor: {color: 'white'},
 });
-//forom here
+
+export const darkModeStyle = StyleSheet.create({
+  pageContainer: {
+    backgroundColor: '#36384c',
+  },
+  sectionContainer: {
+    backgroundColor: '#36384c',
+  },
+  boxContainer: {backgroundColor: '#121212'},
+
+  textColor: {color: '#f3f6f4'},
+
+  textSubColor: {color: 'black'},
+});
+
+export const getStyleSheet = isLightMode => {
+  return isLightMode ? lightModeStyle : darkModeStyle;
+};

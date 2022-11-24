@@ -1,8 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Text, Image, Pressable} from 'react-native';
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  Text,
+  Image,
+  Pressable,
+} from 'react-native';
 import Data from '../data/data.json';
 import {localImages} from '../data/localImages';
-import {text, backgroundColor} from '../style/Style';
+import {text, getStyleSheet} from '../style/Style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const itemData = Data.items;
@@ -12,29 +19,42 @@ const ItemScreen = ({navigation, route}) => {
   const currentItem = itemData[id - 1];
   const [isLiked, setIsliked] = useState(false);
   const [favoritesList, setFavoritesList] = useState([]);
-
-  const getFavoritesList = async () => {
-    try {
-      const storedList = JSON.parse(await AsyncStorage.getItem('favoriteList'));
-      setFavoritesList(storedList);
-      if (storedList === null || storedList === undefined) {
-        setIsliked(false);
-      } else {
-        const foundCurrentItem = storedList.find(storedId => storedId === id);
-        if (foundCurrentItem) {
-          setIsliked(true);
-        } else {
-          setIsliked(false);
-        }
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const [backgroundMode, setBackgroundMode] = useState(true);
+  const externalStyle = getStyleSheet(backgroundMode);
 
   useEffect(() => {
-    getFavoritesList('favoriteList');
-  }, []);
+    const getFavoritesList = async (key, currentId) => {
+      try {
+        const storedList = JSON.parse(await AsyncStorage.getItem(key));
+        setFavoritesList(storedList);
+        if (storedList === null || storedList === undefined) {
+          setIsliked(false);
+        } else {
+          const foundCurrentItem = storedList.find(
+            storedId => storedId === currentId,
+          );
+          if (foundCurrentItem) {
+            setIsliked(true);
+          } else {
+            setIsliked(false);
+          }
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    const getBackgroundMode = async key => {
+      try {
+        const backgroundTheme = JSON.parse(await AsyncStorage.getItem(key));
+        setBackgroundMode(backgroundTheme);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getBackgroundMode('backgroundMode');
+    getFavoritesList('favoriteList', id);
+  }, [id]);
 
   const likeHandler = likeSatus => {
     if (likeSatus) {
@@ -68,17 +88,29 @@ const ItemScreen = ({navigation, route}) => {
         currentItem.price /
         (1 - currentItem.data.discount / 100)
       ).toFixed(0);
+
       return (
         <View>
           <View style={extraStyles.extraInfoBox}>
-            <Text style={text.small}>Sale period</Text>
-            <Text style={text.medium}>{currentItem.data.period}</Text>
+            <Text style={[text.small, externalStyle.textColor]}>
+              Sale period
+            </Text>
+            <Text style={[text.medium, externalStyle.textColor]}>
+              {currentItem.data.period}
+            </Text>
           </View>
           <View style={extraStyles.extraInfoBox}>
-            <Text style={[text.small, {textDecorationLine: 'line-through'}]}>
+            <Text
+              style={[
+                text.small,
+                {textDecorationLine: 'line-through'},
+                externalStyle.textColor,
+              ]}>
               Original price {originalPrice}kr
             </Text>
-            <Text style={text.medium}>{currentItem.data.discount}% OFF</Text>
+            <Text style={[text.medium, externalStyle.textColor]}>
+              {currentItem.data.discount}% OFF
+            </Text>
           </View>
         </View>
       );
@@ -86,36 +118,51 @@ const ItemScreen = ({navigation, route}) => {
   };
   // I want to add "tag info" ex) new, sale, organic, like
   return (
-    <View style={[styles.pageContainer, backgroundColor.pageContainer]}>
-      <Image style={styles.itemImage} source={localImages[id - 1]} />
-      <View style={styles.itemInfo}>
-        <View style={styles.nameImageBox}>
-          <Text style={text.itemTitle}>{currentItem.item}</Text>
-          <Pressable onPress={() => likeHandler(isLiked)}>
-            {isLiked ? (
-              <Image
-                style={styles.likeIcon}
-                source={require('../icons/redHeart.png')}
-              />
-            ) : (
-              <Image
-                style={styles.likeIcon}
-                source={require('../icons/heart.png')}
-              />
-            )}
-          </Pressable>
-        </View>
-        <Text style={text.large}>Description </Text>
-        <Text style={text.medium}>{currentItem.description}</Text>
-        {extraInfo()}
-        <View style={styles.priceUnit}>
-          <Text style={text.medium}>Price</Text>
-          <Text style={[styles.itemPrice, text.pageTitle]}>
-            {currentItem.price}kr
+    <View style={[styles.pageContainer, externalStyle.pageContainer]}>
+      <ScrollView>
+        <Image style={styles.itemImage} source={localImages[id - 1]} />
+        <View style={styles.itemInfo}>
+          <View style={styles.nameImageBox}>
+            <Text style={[text.itemTitle, externalStyle.textColor]}>
+              {currentItem.item}
+            </Text>
+            <Pressable onPress={() => likeHandler(isLiked)}>
+              {isLiked ? (
+                <Image
+                  style={styles.likeIcon}
+                  source={require('../icons/redHeart.png')}
+                />
+              ) : (
+                <Image
+                  style={styles.likeIcon}
+                  source={require('../icons/heart.png')}
+                />
+              )}
+            </Pressable>
+          </View>
+          <Text style={[text.large, externalStyle.textColor]}>
+            Description{' '}
           </Text>
-          <Text style={text.medium}>/{currentItem.unit}</Text>
+          <Text style={[text.medium, externalStyle.textColor]}>
+            {currentItem.description}
+          </Text>
+          {extraInfo()}
+          <View style={styles.priceUnit}>
+            <Text style={[text.medium, externalStyle.textColor]}>Price</Text>
+            <Text
+              style={[
+                styles.itemPrice,
+                text.pageTitle,
+                externalStyle.textColor,
+              ]}>
+              {currentItem.price}kr
+            </Text>
+            <Text style={[text.medium, externalStyle.textColor]}>
+              /{currentItem.unit}
+            </Text>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -129,7 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   likeIcon: {width: 35, height: 35},
-  priceUnit: {flexDirection: 'row'},
+  priceUnit: {flexDirection: 'row', alignItems: 'center'},
   itemPrice: {marginLeft: 'auto'},
 });
 

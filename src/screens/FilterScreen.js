@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   ScrollView,
   View,
@@ -7,13 +7,10 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import SearchBar from '../components/SearchBar';
-import useApi from '../data/api';
-import Data from '../data/data.json';
-import {localImages} from '../data/localImages';
 import FilterDropdown from '../components/FilterDropdown';
 import FilterButton from '../components/FilterButton';
-import {text, backgroundColor} from '../style/Style';
+import {text, getStyleSheet} from '../style/Style';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const typesList = ['Vegetables', 'Fruits', 'Meats', 'Seafoods'];
 const originsList = [
@@ -43,15 +40,17 @@ const FilterScreen = ({navigation, route}) => {
     'New Zealand',
     'Germany',
   ]);
+  const {allItems} = route.params;
   const [isSaleClicked, setIsSaleClicked] = useState(false);
   const [isOrganicClicked, setIsOrganicClicked] = useState(false);
   const [isNewClicked, setIsNewClicked] = useState(false);
-  const {allItems} = route.params;
+  const [backgroundMode, setBackgroundMode] = useState(true);
+  const externalStyle = getStyleSheet(backgroundMode);
 
-  const filterQuery = (text, queryList) => {
+  const filterQuery = (textContent, queryList) => {
     return queryList.some(query => {
       query = query.toLowerCase();
-      return text.toLowerCase().includes(query);
+      return textContent.toLowerCase().includes(query);
     });
   };
 
@@ -65,12 +64,29 @@ const FilterScreen = ({navigation, route}) => {
     return typeQuery && originQuery && sale && organic && newItem;
   });
 
+  useEffect(() => {
+    const getStoredData = async () => {
+      try {
+        const backgroundTheme = JSON.parse(
+          await AsyncStorage.getItem('backgroundMode'),
+        );
+        setBackgroundMode(backgroundTheme);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getStoredData();
+  }, []);
+
   return (
-    <View style={[styles.pageContainer, backgroundColor.pageContainer]}>
+    <View style={[styles.pageContainer, externalStyle.pageContainer]}>
       <ScrollView horizontal={false}>
-        <Text style={[styles.pageTitle, text.pageTitle]}>
-          Choose what you want
-        </Text>
+        <View style={styles.contentContainer}>
+          <Text
+            style={[styles.pageTitle, text.pageTitle, externalStyle.textColor]}>
+            Choose what you want
+          </Text>
+        </View>
         <View style={styles.filterDropdown}>
           <FilterDropdown
             list={typesList}
@@ -86,22 +102,33 @@ const FilterScreen = ({navigation, route}) => {
           />
         </View>
         <View style={styles.filterButtonContainer}>
-          <Text style={[styles.filterButtonText, text.large]}>Items are </Text>
+          <Text
+            style={[
+              styles.filterButtonText,
+              text.large,
+              externalStyle.textColor,
+            ]}>
+            Items are{' '}
+          </Text>
           <View style={styles.filterButton}>
             <FilterButton
               buttonTitle={'on sale '}
-              isChekced={isSaleClicked}
+              isChecked={isSaleClicked}
               setIsChecked={setIsSaleClicked}
+              textColor={backgroundMode ? 'black' : '#f3f6f4'}
+              bgColor={backgroundMode ? '#f3f6f4' : '#36384c'}
             />
             <FilterButton
               buttonTitle={'organic'}
-              isChekced={isOrganicClicked}
+              isChecked={isOrganicClicked}
               setIsChecked={setIsOrganicClicked}
+              textColor={backgroundMode ? 'black' : '#f3f6f4'}
             />
             <FilterButton
               buttonTitle={'new'}
-              isChekced={isNewClicked}
+              isChecked={isNewClicked}
               setIsChecked={setIsNewClicked}
+              textColor={backgroundMode ? 'black' : '#f3f6f4'}
             />
           </View>
         </View>
@@ -114,7 +141,10 @@ const FilterScreen = ({navigation, route}) => {
               return navigation.navigate('FilterResults', {filteredData});
             }
           }}>
-          <Text style={[styles.applyButton, text.large]}>Apply filters</Text>
+          <Text
+            style={[styles.applyButton, text.large, externalStyle.textColor]}>
+            Apply filters
+          </Text>
         </Pressable>
       </ScrollView>
     </View>
@@ -123,7 +153,8 @@ const FilterScreen = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   pageContainer: {flex: 1, alignItems: 'center'},
-  pageTitle: {marginVertical: 10},
+  contentContainer: {alignItems: 'center'},
+  pageTitle: {marginVertical: 20},
   filterDropdown: {
     flexDirection: 'column',
     alignItems: 'center',
@@ -141,7 +172,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     borderRadius: 10,
-    backgroundColor: 'lightblue',
+    backgroundColor: '#f26d52',
     marginBottom: 30,
   },
   applyButton: {

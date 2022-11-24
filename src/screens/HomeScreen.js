@@ -13,30 +13,41 @@ import ItemBox from '../components/ItemBox';
 import OfferBox from '../components/OfferBox';
 import FavoriteBox from '../components/FavoriteBox';
 import {useApi} from '../data/api';
-import {backgroundColor, text} from '../style/Style';
+import {text, getStyleSheet} from '../style/Style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HomeScreen = ({navigation}) => {
   const {data: allItems} = useApi('/items');
   const [favoritesList, setFavoritesList] = useState();
+  const [backgroundMode, setBackgroundMode] = useState(true);
+  const externalStyle = getStyleSheet(backgroundMode);
 
-  const getFavoritesData = async () => {
-    try {
-      const favorites = JSON.parse(await AsyncStorage.getItem('favoriteList'));
-      setFavoritesList(favorites);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  console.log('----', backgroundMode); // false -> dark
+
   useEffect(() => {
-    getFavoritesData();
+    const getStoredData = async () => {
+      try {
+        const favorites = JSON.parse(
+          await AsyncStorage.getItem('favoriteList'),
+        );
+        setFavoritesList(favorites);
+        const backgroundTheme = JSON.parse(
+          await AsyncStorage.getItem('backgroundMode'),
+        );
+        setBackgroundMode(backgroundTheme);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getStoredData();
   }, []);
 
   if (allItems === undefined) {
     return <Text>Loading...</Text>;
   }
+
   return (
-    <View style={[styles.pageContainer, backgroundColor.pageContainer]}>
+    <View style={[styles.pageContainer, externalStyle.pageContainer]}>
       <View style={styles.searchFilter}>
         <SearchBar data={allItems} navigation={navigation} />
         <Pressable onPress={() => navigation.navigate('Filters', {allItems})}>
@@ -46,8 +57,10 @@ const HomeScreen = ({navigation}) => {
           />
         </Pressable>
       </View>
-      <View style={[styles.displayItems, backgroundColor.sectionContainer]}>
-        <Text style={[styles.title, text.pageTitle]}>New items</Text>
+      <View style={[styles.displayItems, externalStyle.sectionContainer]}>
+        <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
+          New items
+        </Text>
         <View style={styles.newItems}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {allItems.map(i => {
@@ -61,13 +74,17 @@ const HomeScreen = ({navigation}) => {
                     type={i.type}
                     price={i.price}
                     unit={i.unit}
+                    textColor={backgroundMode ? 'black' : '#f3f6f4'}
+                    bgColor={backgroundMode ? 'white' : '#121212'}
                   />
                 );
               }
             })}
           </ScrollView>
         </View>
-        <Text style={[styles.title, text.pageTitle]}>Offer items</Text>
+        <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
+          Offer items
+        </Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {allItems.map(i => {
@@ -81,13 +98,17 @@ const HomeScreen = ({navigation}) => {
                     type={i.type}
                     price={i.price}
                     unit={i.unit}
+                    textColor={backgroundMode ? 'black' : '#f3f6f4'}
+                    bgColor={backgroundMode ? 'white' : '#121212'}
                   />
                 );
               }
             })}
           </ScrollView>
         </View>
-        <Text style={[styles.title, text.pageTitle]}>Your favorites</Text>
+        <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
+          Your favorites
+        </Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {favoritesList !== undefined || favoritesList !== null ? (

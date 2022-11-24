@@ -78,11 +78,14 @@ const styles = StyleSheet.create({
   searchResultsBox: {
     position: 'absolute',
     zIndex: 10,
-    top: 50,
+    top: 55,
     marginLeft: 15,
     padding: 10,
-    width: 315,
+    width: 317,
     backgroundColor: 'white',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderWidth: 0.5,
   },
   searchResults: {flexDirection: 'row', justifyContent: 'space-between'},
 });

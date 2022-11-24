@@ -1,51 +1,53 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  Pressable,
-} from 'react-native';
-import SearchBar from '../components/SearchBar';
-import useApi from '../data/api';
-import Data from '../data/data.json';
-import {localImages} from '../data/localImages';
-import FilterDropdown from '../components/FilterDropdown';
-import FilterButton from '../components/FilterButton';
+import {View, StyleSheet, Text, Image, Pressable} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SettingBox from '../components/SettingBox';
-import {text, backgroundColor} from '../style/Style';
+import {getStyleSheet} from '../style/Style';
 
 const SettingsScreen = () => {
-  // const languagesList = ['English', 'Norwegian'];
   const [isLight, setIsLight] = useState(true);
   const [isEnglish, setIsEnglish] = useState(true);
-  const [backgroundMode, setBackgroundMode] = useState('white');
+  const [backgroundMode, setBackgroundMode] = useState(true);
+  const externalStyle = getStyleSheet(backgroundMode);
 
-  const saveBackgroundMode = async () => {
-    try {
-      if (isLight) {
-        setBackgroundMode('white');
-        await AsyncStorage.setItem('backgroundMode', JSON.stringify('white'));
-      } else {
-        setBackgroundMode('lightgrey');
-        await AsyncStorage.setItem(
-          'backgroundMode',
-          JSON.stringify('lightgrey'),
-        );
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  console.log('.......', backgroundMode);
 
   useEffect(() => {
+    const saveBackgroundMode = async () => {
+      try {
+        if (isLight) {
+          setBackgroundMode(true);
+          await AsyncStorage.setItem('backgroundMode', JSON.stringify(true));
+        } else {
+          setBackgroundMode(false);
+          await AsyncStorage.setItem('backgroundMode', JSON.stringify(false));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      console.log('#####', await AsyncStorage.getItem('backgroundMode'));
+    };
     saveBackgroundMode();
-  }, [backgroundMode]);
+  }, [isLight]);
+
+  useEffect(() => {
+    const getStoredData = async () => {
+      try {
+        const backgroundTheme = JSON.parse(
+          await AsyncStorage.getItem('backgroundMode'),
+        );
+        console.log('.....................', backgroundTheme);
+        // setBackgroundMode(backgroundTheme);
+        setIsLight(backgroundTheme);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    getStoredData();
+  }, []);
 
   return (
-    <View style={[styles.pageContainer, backgroundColor.pageContainer]}>
+    <View style={[styles.pageContainer, externalStyle.pageContainer]}>
       <View style={styles.contentContainer}>
         <View style={styles.contentSection}>
           <SettingBox
@@ -54,6 +56,8 @@ const SettingsScreen = () => {
             choiceTwo={'Dark mode'}
             isChoiceOne={isLight}
             setIsChoiceOne={setIsLight}
+            textColor={backgroundMode ? 'black' : '#f3f6f4'}
+            bgColor={backgroundMode ? 'white' : '#36384c'}
           />
         </View>
         <View style={styles.contentSection}>
@@ -63,6 +67,8 @@ const SettingsScreen = () => {
             choiceTwo={'Norwegian'}
             isChoiceOne={isEnglish}
             setIsChoiceOne={setIsEnglish}
+            textColor={backgroundMode ? 'black' : '#f3f6f4'}
+            bgColor={backgroundMode ? 'white' : '#36384c'}
           />
         </View>
       </View>
@@ -78,9 +84,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     marginTop: 20,
     width: 300,
-    backgroundColor: 'pink',
   },
-  // checkIcon: {width: 10, height: 10, marginLeft: 'auto'},
 });
 
 export default SettingsScreen;
