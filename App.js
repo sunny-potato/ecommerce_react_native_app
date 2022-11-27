@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Image} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -9,8 +9,7 @@ import ItemScreen from './src/screens/ItemScreen';
 import FilterResultsScreen from './src/screens/FilterResultsScreen';
 import FavoritesScreen from './src/screens/FavoritesScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-import {getStyleSheet} from './src/style/Style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {AppContextProvider} from './src/AppContext';
 
 const Stack = createNativeStackNavigator();
@@ -19,14 +18,7 @@ const Tab = createBottomTabNavigator();
 const LandingNavigation = () => {
   const HomeStackScreen = () => {
     return (
-      <Stack.Navigator
-        initialRouteName="HomeStack"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: backgroundMode ? '#f3f6f4' : '#36384c',
-          },
-          headerTintColor: backgroundMode ? 'black' : '#f3f6f4',
-        }}>
+      <Stack.Navigator initialRouteName="HomeStack">
         <Stack.Screen
           name="HomeStack"
           component={HomeScreen}
@@ -44,14 +36,7 @@ const LandingNavigation = () => {
   };
   const FavoritesStackScreen = () => {
     return (
-      <Stack.Navigator
-        initialRouteName="Favorites"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: backgroundMode ? '#f3f6f4' : '#36384c',
-          },
-          headerTintColor: backgroundMode ? 'black' : '#f3f6f4',
-        }}>
+      <Stack.Navigator initialRouteName="Favorites">
         <Stack.Screen name="Favorites" component={FavoritesScreen} />
       </Stack.Navigator>
     );
@@ -59,36 +44,11 @@ const LandingNavigation = () => {
 
   const SettingsStackScreen = () => {
     return (
-      <Stack.Navigator
-        initialRouteName="Settings"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: backgroundMode ? '#f3f6f4' : '#36384c',
-          },
-          headerTintColor: backgroundMode ? 'black' : '#f3f6f4',
-        }}>
+      <Stack.Navigator initialRouteName="Settings">
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
     );
   };
-
-  const [backgroundMode, setBackgroundMode] = useState(true);
-  // const externalStyle = getStyleSheet(backgroundMode);
-  console.log('--------------------------------', backgroundMode);
-
-  useEffect(() => {
-    const getStoredData = async () => {
-      try {
-        const backgroundTheme = JSON.parse(
-          await AsyncStorage.getItem('backgroundMode'),
-        );
-        setBackgroundMode(backgroundTheme);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    getStoredData();
-  }, []);
 
   return (
     <AppContextProvider>
@@ -96,10 +56,6 @@ const LandingNavigation = () => {
         <Tab.Navigator
           screenOptions={{
             headerShown: false,
-            headerStyle: {
-              backgroundColor: backgroundMode ? '#f3f6f4' : '#36384c',
-            },
-            headerTintColor: backgroundMode ? 'black' : '#f3f6f4',
           }}>
           <Tab.Screen
             name="HomeTab"
@@ -108,12 +64,10 @@ const LandingNavigation = () => {
               tabBarLabel: 'Home',
               tabBarLabelStyle: {
                 fontSize: 16,
-                color: backgroundMode ? 'black' : '#f3f6f4',
+                color: 'black',
               },
-              // tabBarStyle: {
-              //   backgroundColor: backgroundMode ? 'black' : '#f3f6f4',
-              // },
-              tabBarIcon: ({focused, color, size}) => (
+
+              tabBarIcon: () => (
                 <Image
                   source={require('./src/icons/thumbnail.png')}
                   style={{width: 20, height: 20}}
@@ -128,9 +82,8 @@ const LandingNavigation = () => {
               tabBarLabel: 'Favorites',
               tabBarLabelStyle: {
                 fontSize: 16,
-                color: backgroundMode ? 'black' : '#f3f6f4',
+                color: 'black',
               },
-              // tabBarStyle: {backgroundColor: externalStyle.pageContainer},
               tabBarIcon: ({focused, color, size}) => (
                 <Image
                   source={require('./src/icons/heart.png')}
@@ -146,9 +99,8 @@ const LandingNavigation = () => {
               tabBarLabel: 'Settings',
               tabBarLabelStyle: {
                 fontSize: 16,
-                color: backgroundMode ? 'black' : '#f3f6f4',
+                color: 'black',
               },
-              // tabBarStyle: {backgroundColor: externalStyle.pageContainer},
               tabBarIcon: ({focused, color, size}) => (
                 <Image
                   source={require('./src/icons/settings.png')}

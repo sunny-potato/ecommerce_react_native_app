@@ -10,18 +10,14 @@ import {
 import FilterDropdown from '../components/FilterDropdown';
 import FilterButton from '../components/FilterButton';
 import {text, getStyleSheet} from '../style/Style';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useAppContext} from '../AppContext';
 
 const FilterScreen = ({navigation, route}) => {
-  const language = route.params.language;
-  const allItems = language
-    ? route.params.allData.english
-    : route.params.allData.norwegian;
-  const backgroundMode = route.params.backgroundMode;
-  const typesList = language
+  const {isLightTheme, isEnglishLanguage, allItems} = useAppContext();
+  const currentTypesList = isEnglishLanguage
     ? ['Vegetables', 'Fruits', 'Meats', 'Seafoods']
     : ['Grønnsaker', 'Frukt', 'Kjøtt', 'Sjømat'];
-  const originsList = language
+  const currentOriginsList = isEnglishLanguage
     ? [
         'Mexico',
         'Chile',
@@ -42,15 +38,18 @@ const FilterScreen = ({navigation, route}) => {
         'New Zealand',
         'Tyskland',
       ];
-  const [checkedTypesList, setCheckedTypesList] = useState(typesList);
-  const [checkedOriginsList, setCheckedOriginsList] = useState(originsList);
+
+  const dataByLanguage = isEnglishLanguage
+    ? allItems.english
+    : allItems.norwegian;
+
+  const [checkedTypesList, setCheckedTypesList] = useState(currentTypesList);
+  const [checkedOriginsList, setCheckedOriginsList] =
+    useState(currentOriginsList);
   const [isSaleClicked, setIsSaleClicked] = useState(false);
   const [isOrganicClicked, setIsOrganicClicked] = useState(false);
   const [isNewClicked, setIsNewClicked] = useState(false);
-  const externalStyle = getStyleSheet(backgroundMode);
-
-  // console.log('typelist', checkedTypesList);
-  // console.log('originlist', checkedOriginsList);
+  const externalStyle = getStyleSheet(isLightTheme);
 
   const filterQuery = (textContent, queryList) => {
     return queryList.some(query => {
@@ -59,7 +58,7 @@ const FilterScreen = ({navigation, route}) => {
     });
   };
 
-  const filteredData = allItems.filter(item => {
+  const filteredData = dataByLanguage.filter(item => {
     const typeQuery = filterQuery(item.type, checkedTypesList);
     const originQuery = filterQuery(item.origin, checkedOriginsList);
     const sale = isSaleClicked ? item.onsale === true : true;
@@ -75,19 +74,21 @@ const FilterScreen = ({navigation, route}) => {
         <View style={styles.contentContainer}>
           <Text
             style={[styles.pageTitle, text.pageTitle, externalStyle.textColor]}>
-            {language ? 'Choose what you want' : 'Velg hva du vil'}
+            {isEnglishLanguage ? 'Choose what you want' : 'Velg hva du vil'}
           </Text>
         </View>
         <View style={styles.filterDropdown}>
           <FilterDropdown
-            list={typesList}
+            list={currentTypesList}
             categoryTitle={'Type'}
             checkedList={checkedTypesList}
             setCheckedList={setCheckedTypesList}
           />
           <FilterDropdown
-            list={originsList}
-            categoryTitle={language ? 'Country of origin' : 'Opprinnelsesland'}
+            list={currentOriginsList}
+            categoryTitle={
+              isEnglishLanguage ? 'Country of origin' : 'Opprinnelsesland'
+            }
             checkedList={checkedOriginsList}
             setCheckedList={setCheckedOriginsList}
           />
@@ -99,27 +100,27 @@ const FilterScreen = ({navigation, route}) => {
               text.large,
               externalStyle.textColor,
             ]}>
-            {language ? ' Items are' : 'Varer er '}
+            {isEnglishLanguage ? ' Items are' : 'Varer er '}
           </Text>
           <View style={styles.filterButton}>
             <FilterButton
-              buttonTitle={language ? 'On sale ' : 'På salg'}
+              buttonTitle={isEnglishLanguage ? 'On sale ' : 'På salg'}
               isChecked={isSaleClicked}
               setIsChecked={setIsSaleClicked}
-              textColor={backgroundMode ? 'black' : '#f3f6f4'}
-              bgColor={backgroundMode ? '#f3f6f4' : '#36384c'}
+              textColor={isLightTheme ? 'black' : '#f3f6f4'}
+              bgColor={isLightTheme ? '#f3f6f4' : '#36384c'}
             />
             <FilterButton
-              buttonTitle={language ? 'Organic' : 'Økologisk'}
+              buttonTitle={isEnglishLanguage ? 'Organic' : 'Økologisk'}
               isChecked={isOrganicClicked}
               setIsChecked={setIsOrganicClicked}
-              textColor={backgroundMode ? 'black' : '#f3f6f4'}
+              textColor={isLightTheme ? 'black' : '#f3f6f4'}
             />
             <FilterButton
-              buttonTitle={language ? 'New' : 'Ny'}
+              buttonTitle={isEnglishLanguage ? 'New' : 'Ny'}
               isChecked={isNewClicked}
               setIsChecked={setIsNewClicked}
-              textColor={backgroundMode ? 'black' : '#f3f6f4'}
+              textColor={isLightTheme ? 'black' : '#f3f6f4'}
             />
           </View>
         </View>
@@ -127,20 +128,18 @@ const FilterScreen = ({navigation, route}) => {
           style={styles.applyButtonContainer}
           onPress={() => {
             if (filteredData.length === 0) {
-              language
+              isEnglishLanguage
                 ? Alert.alert('No results found')
                 : Alert.alert('Ingen resultater');
             } else {
               return navigation.navigate('FilterResults', {
                 filteredData: filteredData,
-                language: language,
-                backgroundMode: backgroundMode,
               });
             }
           }}>
           <Text
             style={[styles.applyButton, text.large, externalStyle.textColor]}>
-            {language ? 'Apply filters' : 'Bruke filtre'}
+            {isEnglishLanguage ? 'Apply filters' : 'Bruke filtre'}
           </Text>
         </Pressable>
       </ScrollView>

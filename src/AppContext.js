@@ -1,26 +1,27 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useContext, useEffect, useState} from 'react';
+import {useApi} from './data/api';
 
 const AppContext = React.createContext(null);
 
-/**
- * Get data from parent
- */
+// Get data from parent
 export const useAppContext = () => {
   const data = useContext(AppContext);
   if (data === null) {
-    throw new Error('Context data is missing. Something is very wrong');
+    throw new Error('Context data is missing. Check the context data');
   }
 
   return data;
 };
 
-/**
- * Sends data out to children
- */
+//Sends data out to children
 export const AppContextProvider = ({children}) => {
   const [isLightTheme, setIsLightTheme] = useState(false);
   const [isEnglishLanguage, setIsEnglishLanguage] = useState(false);
+  const [favoritesList, setFavoritesList] = useState([]);
+  const {data: allItems} = useApi('/items');
+  const {data: typesList} = useApi('/typesList');
+  const {data: originsList} = useApi('/originsList');
 
   const updateTheme = async isLight => {
     setIsLightTheme(isLight);
@@ -42,11 +43,25 @@ export const AppContextProvider = ({children}) => {
     }
   };
 
+  const updateFavoritesList = async favorite => {
+    setFavoritesList(favorite);
+    try {
+      await AsyncStorage.setItem('favoriteList', JSON.stringify(favorite));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const value = {
+    allItems,
+    typesList,
+    originsList,
     isLightTheme,
     updateTheme,
     isEnglishLanguage,
     updateLanguage,
+    favoritesList,
+    updateFavoritesList,
   };
 
   useEffect(() => {
@@ -62,12 +77,10 @@ export const AppContextProvider = ({children}) => {
         );
         setIsEnglishLanguage(languageSetting);
 
-        console.log(
-          'stored data : bacground - ',
-          backgroundTheme,
-          'language - ',
-          languageSetting,
+        const favorites = JSON.parse(
+          await AsyncStorage.getItem('favoriteList'),
         );
+        setFavoritesList(favorites);
       } catch (e) {
         console.error(e);
       }

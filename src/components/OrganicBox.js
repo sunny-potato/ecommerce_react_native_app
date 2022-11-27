@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, Text, Image, Alert, Pressable} from 'react-native';
+import {View, StyleSheet, Image, Pressable} from 'react-native';
 
 const OrganicBox = ({image, onPress}) => {
   return (

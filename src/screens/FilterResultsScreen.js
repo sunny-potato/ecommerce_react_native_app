@@ -3,12 +3,12 @@ import {ScrollView, View, StyleSheet, Text} from 'react-native';
 import {localImages} from '../data/localImages';
 import ResultBox from '../components/ResultBox';
 import {text, getStyleSheet} from '../style/Style';
+import {useAppContext} from '../AppContext';
 
 const FilterResultsScreen = ({navigation, route}) => {
-  const language = route.params.language;
-  const backgroundMode = route.params.backgroundMode;
   const {filteredData} = route.params;
-  const externalStyle = getStyleSheet(backgroundMode);
+  const {isLightTheme, isEnglishLanguage} = useAppContext();
+  const externalStyle = getStyleSheet(isLightTheme);
 
   return (
     <View style={[styles.pageContainer, externalStyle.pageContainer]}>
@@ -16,7 +16,7 @@ const FilterResultsScreen = ({navigation, route}) => {
         <View style={styles.contentContainer}>
           <Text
             style={[styles.pageTitle, text.pageTitle, externalStyle.textColor]}>
-            {language ? 'Filter results' : 'Filtrer resultater'}
+            {isEnglishLanguage ? 'Filter results' : 'Filtrer resultater'}
           </Text>
         </View>
         <View style={styles.displayItemsContainer}>
@@ -27,7 +27,6 @@ const FilterResultsScreen = ({navigation, route}) => {
                 onPress={() =>
                   navigation.navigate('Item', {
                     id: i.id,
-                    language: language,
                   })
                 }
                 image={localImages[i.id - 1]}
@@ -35,8 +34,8 @@ const FilterResultsScreen = ({navigation, route}) => {
                 type={i.type}
                 price={i.price}
                 unit={i.unit}
-                textColor={backgroundMode ? 'black' : '#f3f6f4'}
-                bgColor={backgroundMode ? 'white' : '#121212'}
+                textColor={isLightTheme ? 'black' : '#f3f6f4'}
+                bgColor={isLightTheme ? 'white' : '#121212'}
               />
             );
           })}

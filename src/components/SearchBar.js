@@ -15,6 +15,7 @@ const SearchBar = ({data, navigation, language}) => {
   const dataByLanguage = language
     ? originalData.english
     : originalData.norwegian;
+
   const lowerCaseWord = query.toLowerCase();
   const filteredData = dataByLanguage.filter(each => {
     return (
@@ -34,6 +35,14 @@ const SearchBar = ({data, navigation, language}) => {
           value={query}
           onChangeText={setQuery}
         />
+        {query.length > 0 && (
+          <Pressable onPress={() => setQuery('')}>
+            <Image
+              style={styles.deleteIcon}
+              source={require('../icons/x-mark.png')}
+            />
+          </Pressable>
+        )}
         <Image
           style={styles.searchIcon}
           source={require('../icons/search.png')}
@@ -41,28 +50,28 @@ const SearchBar = ({data, navigation, language}) => {
       </View>
       {query.length > 0 && filteredData.length > 0 && (
         <View style={styles.searchResultsBox}>
-          {filteredData.map(i => {
-            return (
-              <Pressable
-                key={i.id}
-                onPress={() =>
-                  navigation.navigate('Item', {id: i.id, language: language})
-                }>
-                <View style={styles.searchResults}>
-                  <Text>{i.item}</Text>
-                  <Text>{i.type}</Text>
-                </View>
-              </Pressable>
-            );
+          {filteredData.map((i, index) => {
+            if (index < 10) {
+              return (
+                <Pressable
+                  key={i.id}
+                  onPress={() => navigation.navigate('Item', {id: i.id})}>
+                  <View style={styles.searchResults}>
+                    <Text>{i.item}</Text>
+                    <Text>{i.type}</Text>
+                  </View>
+                </Pressable>
+              );
+            }
           })}
         </View>
       )}
       {query.length > 0 && filteredData.length === 0 && (
         <View style={styles.searchResultsBox}>
           {language ? (
-            <Text>No result found</Text>
+            <Text>No results found</Text>
           ) : (
-            <Text>Finner ingen favoritter</Text>
+            <Text>Finner ingen resultater</Text>
           )}
         </View>
       )}
@@ -82,6 +91,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     margin: 15,
   },
+  deleteIcon: {width: 15, height: 15, marginHorizontal: 5},
   searchIcon: {width: 20, height: 20},
   textInput: {flex: 1},
   searchResultsBox: {

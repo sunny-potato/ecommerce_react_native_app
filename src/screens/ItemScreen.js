@@ -7,33 +7,36 @@ import {
   Image,
   Pressable,
 } from 'react-native';
-import Data from '../data/data.json';
 import {localImages} from '../data/localImages';
 import {text, getStyleSheet} from '../style/Style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {tagInfo} from '../hooks/TagHandler';
 import {saleInformation} from '../hooks/SaleInformation';
+import {useAppContext} from '../AppContext';
 
 const ItemScreen = ({route}) => {
+  const {
+    isLightTheme,
+    isEnglishLanguage,
+    favoritesList,
+    updateFavoritesList,
+    allItems,
+  } = useAppContext();
+  const externalStyle = getStyleSheet(isLightTheme);
+  const dataByLanguage = isEnglishLanguage
+    ? allItems.english
+    : allItems.norwegian;
   const {id} = route.params;
-  const {language} = route.params;
-  const itemData = language ? Data.items.english : Data.items.norwegian;
-  const currentItem = itemData[id - 1];
+  const currentItem = dataByLanguage[id - 1];
   const [isLiked, setIsliked] = useState(false);
-  const [favoritesList, setFavoritesList] = useState([]);
-  const [backgroundMode, setBackgroundMode] = useState(true);
-  const externalStyle = getStyleSheet(backgroundMode);
-  console.log('backgroundmode', backgroundMode);
+  console.log({favoritesList});
 
   useEffect(() => {
-    const getFavoritesList = async (key, currentId) => {
+    const getFavoritesList = async currentId => {
       try {
-        const storedList = JSON.parse(await AsyncStorage.getItem(key));
-        setFavoritesList(storedList);
-        if (storedList === null || storedList === undefined) {
+        if (favoritesList === null || favoritesList === undefined) {
           setIsliked(false);
         } else {
-          const foundCurrentItem = storedList.find(
+          const foundCurrentItem = favoritesList.find(
             storedId => storedId === currentId,
           );
           if (foundCurrentItem) {
@@ -47,88 +50,23 @@ const ItemScreen = ({route}) => {
       }
     };
 
-    const getBackgroundMode = async key => {
-      try {
-        const backgroundTheme = JSON.parse(await AsyncStorage.getItem(key));
-        setBackgroundMode(backgroundTheme);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    getBackgroundMode('backgroundMode');
-    getFavoritesList('favoriteList', id);
-  }, [id]);
+    getFavoritesList(id);
+  }, [favoritesList, id]);
 
   const likeHandler = likeSatus => {
     if (likeSatus) {
       const updatedList = favoritesList.filter(storedId => {
         return storedId !== id;
       });
-      setFavoritesList(updatedList);
-      saveFavoritesList(updatedList);
+      updateFavoritesList(updatedList);
       setIsliked(false);
     } else {
       const addedList = [...favoritesList, ...[id]];
-      console.log(addedList);
-      setFavoritesList(addedList);
-      saveFavoritesList(addedList);
+      updateFavoritesList(addedList);
       setIsliked(true);
     }
   };
 
-  const saveFavoritesList = async value => {
-    try {
-      await AsyncStorage.setItem('favoriteList', JSON.stringify(value));
-      // console.log('setItem');
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  // const saleInformation = () => {
-  //   if (currentItem.onsale) {
-  //     const originalPrice = (
-  //       currentItem.price /
-  //       (1 - currentItem.data.discount / 100)
-  //     ).toFixed(0);
-
-  //     return (
-  //       <View>
-  //         <View
-  //           style={{
-  //             flexDirection: 'row',
-  //             justifyContent: 'space-between',
-  //           }}>
-  //           <Text style={[text.small, externalStyle.textColor]}>
-  //             {language ? 'Sale until' : 'Tilbud t.o.m'}
-  //           </Text>
-  //           <Text style={[text.medium, externalStyle.textColor]}>
-  //             {currentItem.data.period}
-  //           </Text>
-  //         </View>
-  //         <View
-  //           style={{
-  //             flexDirection: 'row',
-  //             justifyContent: 'space-between',
-  //           }}>
-  //           <Text
-  //             style={[
-  //               text.small,
-  //               {textDecorationLine: 'line-through'},
-  //               externalStyle.textColor,
-  //             ]}>
-  //             {language
-  //               ? `Original price ${originalPrice}kr`
-  //               : `Original pris ${originalPrice}kr`}
-  //           </Text>
-  //           <Text style={[text.small, externalStyle.textColor]}>
-  //             {currentItem.data.discount}% OFF
-  //           </Text>
-  //         </View>
-  //       </View>
-  //     );
-  //   }
-  // };
   return (
     <View style={[styles.pageContainer, externalStyle.pageContainer]}>
       <ScrollView>
@@ -152,15 +90,15 @@ const ItemScreen = ({route}) => {
               )}
             </Pressable>
           </View>
-          {tagInfo(currentItem, language, text, externalStyle)}
+          {tagInfo(currentItem, isEnglishLanguage, text, externalStyle)}
           <Text
             style={[styles.description, text.medium, externalStyle.textColor]}>
             {currentItem.description}
           </Text>
-          {saleInformation(currentItem, language, text, externalStyle)}
+          {saleInformation(currentItem, isEnglishLanguage, text, externalStyle)}
           <View style={styles.priceUnit}>
             <Text style={[text.large, externalStyle.textColor]}>
-              {language ? 'Price' : 'Pris'}
+              {isEnglishLanguage ? 'Price' : 'Pris'}
             </Text>
             <Text
               style={[
@@ -171,7 +109,6 @@ const ItemScreen = ({route}) => {
               {currentItem.price}kr
             </Text>
             <Text style={[text.small, externalStyle.textColor]}>
-              {' '}
               /{currentItem.unit}
             </Text>
           </View>
@@ -195,12 +132,5 @@ const styles = StyleSheet.create({
   priceUnit: {flexDirection: 'row', alignItems: 'center'},
   itemPrice: {marginLeft: 'auto'},
 });
-
-// const extraStyles = StyleSheet.create({
-//   extraInfoBox: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//   },
-// });
 
 export default ItemScreen;

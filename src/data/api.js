@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // const baseURL = 'https://4e79-195-139-121-78.eu.ngrok.io';
 
-const baseURL = 'http://192.168.50.208:3000'; //(IPv4 Address:3000)
+const baseURL = 'http://192.168.0.10:3000'; //(IPv4 Address:3000)
 export const useApi = path => {
   const [data, setData] = useState();
 

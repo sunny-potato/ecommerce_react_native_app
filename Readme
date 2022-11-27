@@ -7,7 +7,10 @@
 - npm mockapi
 - npm ngrok -> put address of url from ngrok in api.js & ngrok http 3000
 
-spørsmål
+//how to use an alternative method of of ngrok
 
-1. websocket
-2. filter function
+1. commando "ipconfig" in terminal -> get "IPv4 Address"
+2. add "--host IPv4 Address" in package.json file
+   ex) mockapi": "json-server --host 192.168.50.208 -w src/data/data.json"
+3. add "http://IPv4 Address:localhost number" as base url
+   ex) http://192.168.50.208:3000

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -12,27 +12,12 @@ import {localImages} from '../data/localImages';
 import ItemBox from '../components/ItemBox';
 import OfferBox from '../components/OfferBox';
 import OrganicBox from '../components/OrganicBox';
-import {useApi} from '../data/api';
 import {text, getStyleSheet} from '../style/Style';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useAppContext} from '../AppContext';
 
 const HomeScreen = ({navigation}) => {
-  const {data: allItems} = useApi('/items');
-  // const [favoritesList, setFavoritesList] = useState();
-  // const [backgroundMode, setBackgroundMode] = useState(true);
-  // const [language, setLanguage] = useState(true);
-
-  const {isLightTheme, isEnglishLanguage} = useAppContext();
-
+  const {isLightTheme, isEnglishLanguage, allItems} = useAppContext();
   const externalStyle = getStyleSheet(isLightTheme);
-
-  console.log(
-    'pageSetting : background - ',
-    isLightTheme,
-    'language - ',
-    isEnglishLanguage,
-  );
 
   if (allItems === undefined) {
     return <Text>Loading...</Text>;
@@ -49,14 +34,7 @@ const HomeScreen = ({navigation}) => {
           navigation={navigation}
           language={isEnglishLanguage}
         />
-        <Pressable
-          onPress={() =>
-            navigation.navigate('Filters', {
-              allData: allItems,
-              language: isEnglishLanguage,
-              backgroundMode: isLightTheme,
-            })
-          }>
+        <Pressable onPress={() => navigation.navigate('Filters')}>
           <Image
             style={styles.filterIcon}
             source={require('../icons/filter.png')}

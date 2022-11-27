@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const text = StyleSheet.create({
   pageTitle: {
@@ -40,6 +39,6 @@ export const darkModeStyle = StyleSheet.create({
   textSubColor: {color: 'black'},
 });
 
-export const getStyleSheet = isLightMode => {
-  return isLightMode ? lightModeStyle : darkModeStyle;
+export const getStyleSheet = isLightTheme => {
+  return isLightTheme ? lightModeStyle : darkModeStyle;
 };

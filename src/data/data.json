@@ -1125,5 +1125,30 @@
       }
     ]
   },
-  "typesList": ["Vegetables", "Fruitss", "Meats", "Searfoods"]
+  "typesList": {
+    "english": ["Vegetables", "Fruits", "Meats", "Seafoods"],
+    "norwegian": ["Grønnsaker", "Frukt", "Kjøtt", "Sjømat"]
+  },
+  "originsList": {
+    "english": [
+      "Mexico",
+      "Chile",
+      "Spain",
+      "Norway",
+      "Italy",
+      "Brasil",
+      "New Zealand",
+      "Germany"
+    ],
+    "norwegian": [
+      "Mexico",
+      "Chile",
+      "Spania",
+      "Norge",
+      "Italia",
+      "Brasil",
+      "New Zealand",
+      "Tyskland"
+    ]
+  }
 }

@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
   itemBox: {
     width: 170,
     height: 250,
-    // backgroundColor: 'white',
     borderRadius: 10,
     margin: 10,
   },

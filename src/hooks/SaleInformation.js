@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {ScrollView, View, StyleSheet, Text} from 'react-native';
+import React from 'react';
+import {View, Text} from 'react-native';
 
 export const saleInformation = (currentItem, language, text, externalStyle) => {
   if (currentItem.onsale) {
