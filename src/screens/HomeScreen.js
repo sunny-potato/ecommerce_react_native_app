@@ -15,54 +15,31 @@ import OrganicBox from '../components/OrganicBox';
 import {useApi} from '../data/api';
 import {text, getStyleSheet} from '../style/Style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useAppContext} from '../AppContext';
 
 const HomeScreen = ({navigation}) => {
   const {data: allItems} = useApi('/items');
   // const [favoritesList, setFavoritesList] = useState();
-  const [backgroundMode, setBackgroundMode] = useState(true);
-  const [language, setLanguage] = useState(true);
-  const externalStyle = getStyleSheet(backgroundMode);
+  // const [backgroundMode, setBackgroundMode] = useState(true);
+  // const [language, setLanguage] = useState(true);
 
-  console.log('----------------------------');
-  useEffect(() => {
-    const getStoredData = async () => {
-      try {
-        // const favorites = JSON.parse(
-        //   await AsyncStorage.getItem('favoriteList'),
-        // );
-        // setFavoritesList(favorites);
-        const backgroundTheme = JSON.parse(
-          await AsyncStorage.getItem('backgroundMode'),
-        );
-        setBackgroundMode(backgroundTheme);
-        const languageSetting = JSON.parse(
-          await AsyncStorage.getItem('language'),
-        );
-        setLanguage(languageSetting);
-        console.log(
-          'stored data : bacground - ',
-          backgroundTheme,
-          'language - ',
-          languageSetting,
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    getStoredData();
-  }, []);
+  const {isLightTheme, isEnglishLanguage} = useAppContext();
+
+  const externalStyle = getStyleSheet(isLightTheme);
 
   console.log(
     'pageSetting : background - ',
-    backgroundMode,
+    isLightTheme,
     'language - ',
-    language,
+    isEnglishLanguage,
   );
 
   if (allItems === undefined) {
     return <Text>Loading...</Text>;
   }
-  const dataByLanguage = language ? allItems.english : allItems.norwegian;
+  const dataByLanguage = isEnglishLanguage
+    ? allItems.english
+    : allItems.norwegian;
 
   return (
     <View style={[styles.pageContainer, externalStyle.pageContainer]}>
@@ -70,14 +47,14 @@ const HomeScreen = ({navigation}) => {
         <SearchBar
           data={allItems}
           navigation={navigation}
-          language={language}
+          language={isEnglishLanguage}
         />
         <Pressable
           onPress={() =>
             navigation.navigate('Filters', {
               allData: allItems,
-              language: language,
-              backgroundMode: backgroundMode,
+              language: isEnglishLanguage,
+              backgroundMode: isLightTheme,
             })
           }>
           <Image
@@ -88,7 +65,7 @@ const HomeScreen = ({navigation}) => {
       </View>
       <View style={[styles.displayItems, externalStyle.sectionContainer]}>
         <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
-          {language ? 'New items' : 'Nye varer'}
+          {isEnglishLanguage ? 'New items' : 'Nye varer'}
         </Text>
         <View style={styles.newItems}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -100,7 +77,7 @@ const HomeScreen = ({navigation}) => {
                     onPress={() =>
                       navigation.navigate('Item', {
                         id: i.id,
-                        language: language,
+                        language: isEnglishLanguage,
                       })
                     }
                     image={localImages[i.id - 1]}
@@ -108,8 +85,8 @@ const HomeScreen = ({navigation}) => {
                     type={i.type}
                     price={i.price}
                     unit={i.unit}
-                    textColor={backgroundMode ? 'black' : '#f3f6f4'}
-                    bgColor={backgroundMode ? 'white' : '#121212'}
+                    textColor={isLightTheme ? 'black' : '#f3f6f4'}
+                    bgColor={isLightTheme ? 'white' : '#121212'}
                   />
                 );
               }
@@ -117,7 +94,7 @@ const HomeScreen = ({navigation}) => {
           </ScrollView>
         </View>
         <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
-          {language ? 'Sale items' : 'Tilbudsvarer'}
+          {isEnglishLanguage ? 'Sale items' : 'Tilbudsvarer'}
         </Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -126,14 +103,19 @@ const HomeScreen = ({navigation}) => {
                 return (
                   <OfferBox
                     key={i.id}
-                    onPress={() => navigation.navigate('Item', {id: i.id})}
+                    onPress={() =>
+                      navigation.navigate('Item', {
+                        id: i.id,
+                        language: isEnglishLanguage,
+                      })
+                    }
                     image={localImages[i.id - 1]}
                     name={i.item}
                     type={i.type}
                     price={i.price}
                     unit={i.unit}
-                    textColor={backgroundMode ? 'black' : '#f3f6f4'}
-                    bgColor={backgroundMode ? 'white' : '#121212'}
+                    textColor={isLightTheme ? 'black' : '#f3f6f4'}
+                    bgColor={isLightTheme ? 'white' : '#121212'}
                   />
                 );
               }
@@ -141,7 +123,7 @@ const HomeScreen = ({navigation}) => {
           </ScrollView>
         </View>
         <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
-          {language ? 'Oragnic items' : 'Økologiske varer'}
+          {isEnglishLanguage ? 'Oragnic items' : 'Økologiske varer'}
         </Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -154,7 +136,12 @@ const HomeScreen = ({navigation}) => {
                     <OrganicBox
                       key={i.id}
                       image={localImages[i.id - 1]}
-                      onPress={() => navigation.navigate('Item', {id: i.id})}
+                      onPress={() =>
+                        navigation.navigate('Item', {
+                          id: i.id,
+                          language: isEnglishLanguage,
+                        })
+                      }
                     />
                   );
                 }

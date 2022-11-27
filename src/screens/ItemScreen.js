@@ -22,8 +22,8 @@ const ItemScreen = ({route}) => {
   const [isLiked, setIsliked] = useState(false);
   const [favoritesList, setFavoritesList] = useState([]);
   const [backgroundMode, setBackgroundMode] = useState(true);
-
   const externalStyle = getStyleSheet(backgroundMode);
+  console.log('backgroundmode', backgroundMode);
 
   useEffect(() => {
     const getFavoritesList = async (key, currentId) => {

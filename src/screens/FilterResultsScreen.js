@@ -24,7 +24,12 @@ const FilterResultsScreen = ({navigation, route}) => {
             return (
               <ResultBox
                 key={i.id}
-                onPress={() => navigation.navigate('Item', {id: i.id})}
+                onPress={() =>
+                  navigation.navigate('Item', {
+                    id: i.id,
+                    language: language,
+                  })
+                }
                 image={localImages[i.id - 1]}
                 name={i.item}
                 type={i.type}

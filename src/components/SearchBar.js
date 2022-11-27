@@ -45,7 +45,9 @@ const SearchBar = ({data, navigation, language}) => {
             return (
               <Pressable
                 key={i.id}
-                onPress={() => navigation.navigate('Item', {id: i.id})}>
+                onPress={() =>
+                  navigation.navigate('Item', {id: i.id, language: language})
+                }>
                 <View style={styles.searchResults}>
                   <Text>{i.item}</Text>
                   <Text>{i.type}</Text>

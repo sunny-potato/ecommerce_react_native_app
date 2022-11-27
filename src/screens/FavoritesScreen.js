@@ -46,38 +46,65 @@ const FavoritesScreen = ({navigation}) => {
     return <Text>Loading...</Text>;
   }
   const dataByLanguage = language ? allItems.english : allItems.norwegian;
+  console.log(favoritesList.length === 0 ? 'ja' : 'nei');
 
   return (
-    <View>
+    <View style={[styles.pageContainer, externalStyle.pageContainer]}>
       <ScrollView>
-        <Text>{language ? 'Your favorites' : 'Dine favoritter'}</Text>
-        {favoritesList !== undefined || favoritesList !== null ? (
-          dataByLanguage
-            .filter(i => favoritesList.some(each => each === i.id))
-            .map(i => {
-              return (
-                <FavoritesBox
-                  key={i.id}
-                  image={localImages[i.id - 1]}
-                  onPress={() => navigation.navigate('Item', {id: i.id})}
-                  name={i.item}
-                  type={i.type}
-                  origin={i.origin}
-                  price={i.price}
-                  unit={i.unit}
-                  tag={tagInfo(i, language, text, externalStyle)}
-                  textColor={backgroundMode ? 'black' : '#f3f6f4'}
-                  bgColor={backgroundMode ? 'white' : '#121212'}
-                />
-              );
-            })
-        ) : language ? (
-          <Text>No found favorites</Text>
-        ) : (
-          <Text>Finner ingen favoritter</Text>
-        )}
+        <View style={styles.contentContainer}>
+          <Text
+            style={[styles.pageTitle, text.pageTitle, externalStyle.textColor]}>
+            {language ? 'Your favorites' : 'Dine favoritter'}
+          </Text>
+          {favoritesList !== undefined ||
+            favoritesList !== null ||
+            (favoritesList.length !== 0 &&
+              dataByLanguage
+                .filter(i => favoritesList.some(each => each === i.id))
+                .map(i => {
+                  return (
+                    <FavoritesBox
+                      key={i.id}
+                      image={localImages[i.id - 1]}
+                      onPress={() =>
+                        navigation.navigate('Item', {
+                          id: i.id,
+                          language: language,
+                        })
+                      }
+                      name={i.item}
+                      type={i.type}
+                      origin={i.origin}
+                      price={i.price}
+                      unit={i.unit}
+                      tag={tagInfo(i, language, text, externalStyle)}
+                      textColor={backgroundMode ? 'black' : '#f3f6f4'}
+                      bgColor={backgroundMode ? 'white' : '#121212'}
+                    />
+                  );
+                }))}
+          {favoritesList === undefined ||
+            favoritesList === null ||
+            (favoritesList.length === 0 &&
+              (language ? (
+                <Text style={[text.medium, externalStyle.textColor]}>
+                  No favorites
+                </Text>
+              ) : (
+                <Text style={[text.medium, externalStyle.textColor]}>
+                  Ingen favoritter
+                </Text>
+              )))}
+        </View>
       </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  pageContainer: {flex: 1},
+  contentContainer: {alignItems: 'center'},
+  pageTitle: {marginVertical: 20},
+  // infoMessage: {color: 'black'},
+});
 export default FavoritesScreen;

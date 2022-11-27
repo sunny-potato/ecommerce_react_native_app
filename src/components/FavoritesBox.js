@@ -15,9 +15,9 @@ const FavoritesBox = ({
   bgColor,
 }) => {
   return (
-    <View style={styles.favoritesBox}>
+    <View style={[styles.favoritesBox, {backgroundColor: bgColor}]}>
       <Pressable onPress={onPress}>
-        <View style={styles.contentBox}>
+        <View style={[styles.contentBox, {backgroundColor: bgColor}]}>
           <Image style={styles.image} source={image} />
           <View style={styles.information}>
             <View style={styles.infoDetails}>
@@ -42,11 +42,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 5,
     borderRadius: 10,
+    // backgroundColor: 'red',
   },
   contentBox: {
     height: 100,
     flexDirection: 'row',
-    backgroundColor: 'pink',
+    // backgroundColor: 'pink',
     borderRadius: 10,
   },
   image: {width: 100, height: 100, resizeMode: 'cover', borderRadius: 10},

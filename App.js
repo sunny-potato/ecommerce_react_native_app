@@ -11,6 +11,7 @@ import FavoritesScreen from './src/screens/FavoritesScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import {getStyleSheet} from './src/style/Style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AppContextProvider} from './src/AppContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -21,8 +22,10 @@ const LandingNavigation = () => {
       <Stack.Navigator
         initialRouteName="HomeStack"
         screenOptions={{
-          headerStyle: {backgroundColor: externalStyle.pageContainer},
-          headerTintColor: {color: externalStyle.textColor},
+          headerStyle: {
+            backgroundColor: backgroundMode ? '#f3f6f4' : '#36384c',
+          },
+          headerTintColor: backgroundMode ? 'black' : '#f3f6f4',
         }}>
         <Stack.Screen
           name="HomeStack"
@@ -44,8 +47,10 @@ const LandingNavigation = () => {
       <Stack.Navigator
         initialRouteName="Favorites"
         screenOptions={{
-          headerStyle: {backgroundColor: externalStyle.pageContainer},
-          headerTintColor: {color: externalStyle.textColor},
+          headerStyle: {
+            backgroundColor: backgroundMode ? '#f3f6f4' : '#36384c',
+          },
+          headerTintColor: backgroundMode ? 'black' : '#f3f6f4',
         }}>
         <Stack.Screen name="Favorites" component={FavoritesScreen} />
       </Stack.Navigator>
@@ -57,8 +62,10 @@ const LandingNavigation = () => {
       <Stack.Navigator
         initialRouteName="Settings"
         screenOptions={{
-          headerStyle: {backgroundColor: externalStyle.pageContainer},
-          headerTintColor: {color: externalStyle.textColor},
+          headerStyle: {
+            backgroundColor: backgroundMode ? '#f3f6f4' : '#36384c',
+          },
+          headerTintColor: backgroundMode ? 'black' : '#f3f6f4',
         }}>
         <Stack.Screen name="Settings" component={SettingsScreen} />
       </Stack.Navigator>
@@ -66,7 +73,7 @@ const LandingNavigation = () => {
   };
 
   const [backgroundMode, setBackgroundMode] = useState(true);
-  const externalStyle = getStyleSheet(backgroundMode);
+  // const externalStyle = getStyleSheet(backgroundMode);
   console.log('--------------------------------', backgroundMode);
 
   useEffect(() => {
@@ -84,55 +91,75 @@ const LandingNavigation = () => {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={{headerShown: false}}>
-        <Tab.Screen
-          name="HomeTab"
-          component={HomeStackScreen}
-          options={{
-            tabBarLabel: 'Home',
-            tabBarLabelStyle: {fontSize: 16, color: externalStyle.textColor},
-            tabBarStyle: {backgroundColor: externalStyle.pageContainer},
-            tabBarIcon: ({focused, color, size}) => (
-              <Image
-                source={require('./src/icons/thumbnail.png')}
-                style={{width: 20, height: 20}}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="FavoritesTab"
-          component={FavoritesStackScreen}
-          options={{
-            tabBarLabel: 'Favorites',
-            tabBarLabelStyle: {fontSize: 16, color: externalStyle.textColor},
-            tabBarStyle: {backgroundColor: externalStyle.pageContainer},
-            tabBarIcon: ({focused, color, size}) => (
-              <Image
-                source={require('./src/icons/heart.png')}
-                style={{width: 23, height: 23}}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="SettingsTab"
-          component={SettingsStackScreen}
-          options={{
-            tabBarLabel: 'Settings',
-            tabBarLabelStyle: {fontSize: 16, color: externalStyle.textColor},
-            tabBarStyle: {backgroundColor: externalStyle.pageContainer},
-            tabBarIcon: ({focused, color, size}) => (
-              <Image
-                source={require('./src/icons/settings.png')}
-                style={{width: 23, height: 23}}
-              />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <AppContextProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            headerStyle: {
+              backgroundColor: backgroundMode ? '#f3f6f4' : '#36384c',
+            },
+            headerTintColor: backgroundMode ? 'black' : '#f3f6f4',
+          }}>
+          <Tab.Screen
+            name="HomeTab"
+            component={HomeStackScreen}
+            options={{
+              tabBarLabel: 'Home',
+              tabBarLabelStyle: {
+                fontSize: 16,
+                color: backgroundMode ? 'black' : '#f3f6f4',
+              },
+              // tabBarStyle: {
+              //   backgroundColor: backgroundMode ? 'black' : '#f3f6f4',
+              // },
+              tabBarIcon: ({focused, color, size}) => (
+                <Image
+                  source={require('./src/icons/thumbnail.png')}
+                  style={{width: 20, height: 20}}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="FavoritesTab"
+            component={FavoritesStackScreen}
+            options={{
+              tabBarLabel: 'Favorites',
+              tabBarLabelStyle: {
+                fontSize: 16,
+                color: backgroundMode ? 'black' : '#f3f6f4',
+              },
+              // tabBarStyle: {backgroundColor: externalStyle.pageContainer},
+              tabBarIcon: ({focused, color, size}) => (
+                <Image
+                  source={require('./src/icons/heart.png')}
+                  style={{width: 23, height: 23}}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="SettingsTab"
+            component={SettingsStackScreen}
+            options={{
+              tabBarLabel: 'Settings',
+              tabBarLabelStyle: {
+                fontSize: 16,
+                color: backgroundMode ? 'black' : '#f3f6f4',
+              },
+              // tabBarStyle: {backgroundColor: externalStyle.pageContainer},
+              tabBarIcon: ({focused, color, size}) => (
+                <Image
+                  source={require('./src/icons/settings.png')}
+                  style={{width: 23, height: 23}}
+                />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </AppContextProvider>
   );
 };
 

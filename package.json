@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "mockapi": "json-server -w src/data/data.json"
+    "mockapi": "json-server --host  192.168.50.208 -w src/data/data.json"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
