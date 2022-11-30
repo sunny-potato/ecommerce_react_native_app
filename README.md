@@ -75,7 +75,7 @@ and add address of URL from ngrok as baseURL in api.js
    ex) http://100.158.30.208:3000
 
 ## Screenshot
-![Alt text](first_react_native_app.mkv)
+![](first_react_native_app.mkv)
 
 ## Features
 
