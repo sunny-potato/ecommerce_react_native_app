@@ -65,14 +65,13 @@ run ngrok in new terminal,
 ngrok http 3000
 ```
 
-and add address of URL from ngrok as baseURL in api.js
-
+and add url from ngrok as baseURL to api.js
 
 (an alternative to ngrok)
 1. Commando "ipconfig" in terminal and then copy "IPv4 Address"
-2. Add "--host IPv4 Address" in package.json file
+2. Add "--host IPv4 Address" to package.json file
    ex) mockapi: "json-server --host 192.168.50.208 -w src/data/data.json"
-3. Add "http://IPv4 Address:localhost number" as base url in api.js file.
+3. Add "http://IPv4address:localhostnumber" as base url to api.js file.
    ex) http://100.158.30.208:3000
 
 ## Screenshot
