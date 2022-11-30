@@ -1,9 +1,5 @@
 # React-native app
 
-
-## Introduction
-
-
 It is individual project as assessment of INFT2508 autumn 2022.
 The goal of this project is to create simple app for Android using React-native framework.
 The project is mobile grocery app where user can search products and get information on the products on mobile.
