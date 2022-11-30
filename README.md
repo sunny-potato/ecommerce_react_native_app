@@ -65,9 +65,6 @@ ngrok http 3000
 
 and add address of URL from ngrok as baseURL in api.js
 
-```bash
-ngrok http 3000
-```
 
 (an alternative to ngrok)
 
