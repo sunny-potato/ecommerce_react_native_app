@@ -4,6 +4,7 @@ It is individual project as assessment of INFT2508 autumn 2022.
 The goal of this project is to create simple app for Android using React-native framework.
 The project is mobile grocery app where user can search products and get information on the products on mobile.
 
+
 ## Table of Contents
 
 
@@ -11,6 +12,7 @@ The project is mobile grocery app where user can search products and get informa
 - [Run the project](#runtheproject)
 - [Screenshot](#screenshot)
 - [Features](#features)
+- [Reference](#reference)
 
 ## Technologies
 
@@ -67,7 +69,6 @@ and add address of URL from ngrok as baseURL in api.js
 
 
 (an alternative to ngrok)
-
 1. Commando "ipconfig" in terminal and then copy "IPv4 Address"
 2. Add "--host IPv4 Address" in package.json file
    ex) mockapi: "json-server --host 192.168.50.208 -w src/data/data.json"
@@ -77,8 +78,8 @@ and add address of URL from ngrok as baseURL in api.js
 ## Screenshot
 ![](first_react_native.gif)
 
-## Features
 
+## Features
 
 - Display products by tags
 - Search products by keyword in search bar
@@ -86,3 +87,6 @@ and add address of URL from ngrok as baseURL in api.js
 - Save favorites as a list
 - Offer two languages (English, Norwegian)
 - Change background theme (Dark mode, Light mode)
+
+## Reference
+Product descriptions in the app come from https://www.bama.no/ or https://meny.no/
