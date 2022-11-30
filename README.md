@@ -1,18 +1,11 @@
 # React-native app
 
----
-
-## Introduction
-
----
-
 It is individual project as assessment of INFT2508 autumn 2022.
 The goal of this project is to create simple app for Android using React-native framework.
 The project is mobile grocery app where user can search products and get information on the products on mobile.
 
 ## Table of Contents
 
----
 
 - [Technologies](#technologies)
 - [Run the project](#runtheproject)
@@ -21,7 +14,6 @@ The project is mobile grocery app where user can search products and get informa
 
 ## Technologies
 
----
 
 ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
@@ -30,7 +22,6 @@ The project is mobile grocery app where user can search products and get informa
 
 ## Run the project
 
----
 
 To run the app it is required to install
 
@@ -40,7 +31,7 @@ To run the app it is required to install
 4. Ngrok : it helps to run Android emulator on a local machin with Https address
 5. Axios : Axios library is used for client server
 
-If all above installed,
+**If all above installed,**
 
 clone the repository of project in terminal,
 
@@ -74,9 +65,6 @@ ngrok http 3000
 
 and add address of URL from ngrok as baseURL in api.js
 
-```bash
-ngrok http 3000
-```
 
 (an alternative to ngrok)
 
@@ -87,12 +75,10 @@ ngrok http 3000
    ex) http://100.158.30.208:3000
 
 ## Screenshot
-
----
+![](first_react_native_app.gif)
 
 ## Features
 
----
 
 - Display products by tags
 - Search products by keyword in search bar
