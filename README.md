@@ -35,7 +35,7 @@ To run the app it is required to install
 4. Ngrok : it helps to run Android emulator on a local machin with Https address
 5. Axios : Axios library is used for client server
 
-If all above installed,
+**If all above installed,**
 
 clone the repository of project in terminal,
 
