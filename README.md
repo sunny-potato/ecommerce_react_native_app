@@ -3,7 +3,6 @@
 
 ## Introduction
 
----
 
 It is individual project as assessment of INFT2508 autumn 2022.
 The goal of this project is to create simple app for Android using React-native framework.
@@ -11,7 +10,6 @@ The project is mobile grocery app where user can search products and get informa
 
 ## Table of Contents
 
----
 
 - [Technologies](#technologies)
 - [Run the project](#runtheproject)
@@ -20,7 +18,6 @@ The project is mobile grocery app where user can search products and get informa
 
 ## Technologies
 
----
 
 ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
@@ -29,7 +26,6 @@ The project is mobile grocery app where user can search products and get informa
 
 ## Run the project
 
----
 
 To run the app it is required to install
 
@@ -87,11 +83,9 @@ ngrok http 3000
 
 ## Screenshot
 
----
 
 ## Features
 
----
 
 - Display products by tags
 - Search products by keyword in search bar
