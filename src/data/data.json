@@ -326,7 +326,7 @@
       {
         "id": 24,
         "item": "Pulled pork",
-        "description": "....",
+        "description": "It is finished pulled pork, which is a tender and long-roasted roast of pork. Long cooking time at low heat makes the meat so tender that it can be pulled apart. Enjoy the tender meat",
         "type": "Meats",
         "origin": "Germany",
         "price": 180,
@@ -410,7 +410,7 @@
       {
         "id": 30,
         "item": "Minced beef",
-        "description": "....",
+        "description": "This is for many good dinners. Hamburgers, meatballs, pies, tacos, pasta bolognese and much more.",
         "type": "Meats",
         "origin": "Norway",
         "price": 102,
@@ -424,7 +424,7 @@
       {
         "id": 31,
         "item": "Lamb steak",
-        "description": "....",
+        "description": "It is fresh meat from Norway, which is world class when it comes to taste and quality!",
         "type": "Meats",
         "origin": "Norway",
         "price": 90,
@@ -438,7 +438,7 @@
       {
         "id": 32,
         "item": "Lamb sausage",
-        "description": "....",
+        "description": "Lamb sausage is a sausage with thyme, garlic and cheese. It's full flavor. Incredible good!",
         "type": "Meats",
         "origin": "Norway",
         "price": 110,
@@ -452,7 +452,7 @@
       {
         "id": 33,
         "item": "Salmon sushi",
-        "description": "Sushi quality with great color and rich flavor",
+        "description": "Would you like to make sushi home? Then it is perfect for you.  This is good quality of salmon with great color and rich taste.  ",
         "type": "Seafoods",
         "origin": "Norway",
         "price": 120,
@@ -465,8 +465,8 @@
       },
       {
         "id": 34,
-        "item": "Salmon steak",
-        "description": "Bones are removed. ready to cook.",
+        "item": "Salmon fillet",
+        "description": "Bones are removed. Ready to cook.",
         "type": "Seafoods",
         "origin": "Norway",
         "price": 132,
@@ -479,8 +479,8 @@
       },
       {
         "id": 35,
-        "item": "Cod fillet",
-        "description": "Cod fillets are caught directly from local.",
+        "item": "Cod",
+        "description": "Cod is a lean white fish and is naturally rich in proteins and iodine. You can even cut it up into several portions and use in different foods.",
         "type": "Seafoods",
         "origin": "Norway",
         "price": 200,
@@ -494,7 +494,7 @@
       {
         "id": 36,
         "item": "Crab",
-        "description": "long legs and claws filed with meat. Ready to eat",
+        "description": "The crab meat has a sweet aroma and is marked by the fresh taste of the sea. One large crab contains approx. 150-200 grams of meat, and this is enough for one person.",
         "type": "Seafoods",
         "origin": "Norway",
         "price": 260,
@@ -508,7 +508,7 @@
       {
         "id": 37,
         "item": "Mackerel",
-        "description": "Wild caught.",
+        "description": "Mackerel is a typical fatty fish, very rich in omega 3. Make dinner with fresh mackerel!",
         "type": "Seafoods",
         "origin": "Norway",
         "price": 32,
@@ -522,7 +522,7 @@
       {
         "id": 38,
         "item": "Mussels",
-        "description": "....",
+        "description": "Mussels can be a whole dish in itself or appear as an ingredient together with several other ingredients in more complex dishes. For example, fish soups and stews, pasta dishes and salads with various fish and shellfish. It is important to wash and scrub the shells well. After the shells have been heat-treated, only those that have opened can be eaten. The closed ones must be thrown away.",
         "type": "Seafoods",
         "origin": "Norway",
         "price": 220,
@@ -535,8 +535,8 @@
       },
       {
         "id": 39,
-        "item": "Shrimps",
-        "description": "",
+        "item": "Prawns",
+        "description": "Prawns are a well-known and beloved type of shellfish that is very popular in this country in the summer. But if you want the big prawns with a crispy shell, you should actually eat them in the winter when they are at their very best. Now is the perfect season for the big prawns!",
         "type": "Seafoods",
         "origin": "New Zealand",
         "price": 169,
@@ -550,7 +550,7 @@
       {
         "id": 40,
         "item": "Oyster",
-        "description": "Persiable ---?????",
+        "description": "Oysters are often something you serve for a romantic evening or a special occasion. They are suitable as an extra great starter or part of a shellfish platter. Loosen the oyster from the shell with your fork and pop it into your mouth. Good with, for example, lemon and tabasco.",
         "type": "Seafoods",
         "origin": "Norway",
         "price": 30,
@@ -888,7 +888,7 @@
       {
         "id": 24,
         "item": "Pulled pork",
-        "description": "....",
+        "description": "Det er ferdig pulled pork som er en mør og langtidsstekt stek av svinekjøtt. Lang steketid ved lav varme gjør kjøttet så mørt at det kan trekkes fra hverandre. Kos deg med det mørte kjøttet",
         "type": "Kjøtt",
         "origin": "Tyskland",
         "price": 180,
@@ -958,7 +958,7 @@
       {
         "id": 29,
         "item": "Egg",
-        "description": "Ekstra store egg fra norske bønder. ",
+        "description": "Ekstra store egg fra norske bønder.",
         "type": "Kjøtt",
         "origin": "Norge",
         "price": 32,
@@ -972,7 +972,7 @@
       {
         "id": 30,
         "item": "Kjøttdeig",
-        "description": "....",
+        "description": "Kjøttdeig er for mange gode middager. Hamburgere, kjøttboller, paier, taco, pasta bolognese og mye mer.",
         "type": "Kjøtt",
         "origin": "Norge",
         "price": 102,
@@ -985,8 +985,8 @@
       },
       {
         "id": 31,
-        "item": "Lamb steak",
-        "description": "....",
+        "item": "Lammelår i skiver",
+        "description": "Det er fersk kjøtt fra Norge, noe som er i verdensklass når det kommer til smak og kvalitet! ",
         "type": "Kjøtt",
         "origin": "Norge",
         "price": 90,
@@ -999,8 +999,8 @@
       },
       {
         "id": 32,
-        "item": "Lamb sausage",
-        "description": "....",
+        "item": "Lammepølse",
+        "description": "Lammepølse er en pølse med timian, hvitløk og ost. Det er fyldig smak. Utrolig godt!    ",
         "type": "Kjøtt",
         "origin": "Norge",
         "price": 110,
@@ -1013,8 +1013,8 @@
       },
       {
         "id": 33,
-        "item": "Salmon sushi",
-        "description": "Sushi quality with great color and rich flavor",
+        "item": "Sushi-laks",
+        "description": "Vil du lage sushi hjemme? Da er det perfekt for deg. Dette er laks av god kvalitet med flott farge og rik smak.",
         "type": "Sjømat",
         "origin": "Norge",
         "price": 120,
@@ -1027,8 +1027,8 @@
       },
       {
         "id": 34,
-        "item": "Salmon steak",
-        "description": "Bones are removed. ready to cook.",
+        "item": "Laksefilet",
+        "description": "Bein fjernes. Klar til å lage mat.",
         "type": "Sjømat",
         "origin": "Norge",
         "price": 132,
@@ -1041,8 +1041,8 @@
       },
       {
         "id": 35,
-        "item": "Cod fillet",
-        "description": "Cod fillets are caught directly from local.",
+        "item": "Torsk",
+        "description": "Torsk er en mager hvit fisk og er naturlig rik på proteiner og jod. Du kan selv kutte den opp i flere porsjonsbiter og bruke i forskjellige mat.",
         "type": "Sjømat",
         "origin": "Norge",
         "price": 200,
@@ -1055,8 +1055,8 @@
       },
       {
         "id": 36,
-        "item": "Crab",
-        "description": "long legs and claws filed with meat. Ready to eat",
+        "item": "Krabbe",
+        "description": "Krabbekjøttet har en søtlig aroma og bærer preg av den friske smaken av hav. Én stor krabbe inneholder ca. 150-200 gram kjøtt, og dette er nok til én person.",
         "type": "Sjømat",
         "origin": "Norge",
         "price": 260,
@@ -1069,8 +1069,8 @@
       },
       {
         "id": 37,
-        "item": "Mackerel",
-        "description": "Wild caught.",
+        "item": "Makrell",
+        "description": "Makrellen er en typisk fet fisk, svært rik på omega 3. Lag middag med fersk makrell!",
         "type": "Sjømat",
         "origin": "Norge",
         "price": 32,
@@ -1083,8 +1083,8 @@
       },
       {
         "id": 38,
-        "item": "Mussels",
-        "description": "....",
+        "item": "Blåskjell",
+        "description": "Blåskjell kan være en hel rett i seg selv eller opptre som ingrediens sammen med flere andre ingredienser i mer sammensatte retter. For eksempel fiskesupper og gryter, pastaretter og salater med ulike fisk og skalldyr. Det er viktig å vaske og skrubbe skjellene godt. Etter at skjellene er varmebehandlet, er det bare de som har åpnet seg som kan spises. De lukkede må kastes.",
         "type": "Sjømat",
         "origin": "Norge",
         "price": 220,
@@ -1097,8 +1097,8 @@
       },
       {
         "id": 39,
-        "item": "Shrimps",
-        "description": "",
+        "item": "Reker",
+        "description": "Reker er en kjent og kjær skalldyrtype som er veldig populær her i landet om sommeren. Men ønsker du de store rekene med sprøtt skall bør du faktisk spise dem om vinteren da de er på sitt aller beste. Nå er det perfekt sesong til de store rekene! ",
         "type": "Sjømat",
         "origin": "New Zealand",
         "price": 169,
@@ -1111,8 +1111,8 @@
       },
       {
         "id": 40,
-        "item": "Oyster",
-        "description": "Persiable ---?????",
+        "item": "Østers",
+        "description": "Østers er gjerne noe du serverer til en romantisk aften eller en spesiell anledning. De egner seg som en litt ekstra flott forrett eller en del av et skalldyrfat. Løsne østersen fra skjellet med gaffelen din og hell det i munnen. Godt med for eksempel sitron og tabasco.",
         "type": "Sjømat",
         "origin": "Norge",
         "price": 30,
