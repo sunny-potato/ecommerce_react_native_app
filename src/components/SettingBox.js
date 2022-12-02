@@ -11,7 +11,6 @@ const SettingBox = ({
   textColor,
   bgColor,
 }) => {
-  console.log('bgColor', bgColor);
   return (
     <View>
       <Text style={[styles.titleText, text.large, {color: textColor}]}>

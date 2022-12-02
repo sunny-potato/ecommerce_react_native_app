@@ -28,7 +28,6 @@ const ItemScreen = ({route}) => {
   const {id} = route.params;
   const currentItem = dataByLanguage[id - 1];
   const [isLiked, setIsliked] = useState(false);
-  console.log({favoritesList});
 
   useEffect(() => {
     const getFavoritesList = async currentId => {

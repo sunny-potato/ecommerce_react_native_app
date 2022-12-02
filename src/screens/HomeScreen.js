@@ -101,7 +101,7 @@ const HomeScreen = ({navigation}) => {
           </ScrollView>
         </View>
         <Text style={[styles.title, text.pageTitle, externalStyle.textColor]}>
-          {isEnglishLanguage ? 'Oragnic items' : 'Økologiske varer'}
+          {isEnglishLanguage ? 'Organic items' : 'Økologiske varer'}
         </Text>
         <View>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
